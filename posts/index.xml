@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on My Site</title>
+    <link>https://lumin3t.github.io/posts/</link>
+    <description>Recent content in Posts on My Site</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 23 Feb 2025 15:01:18 +0530</lastBuildDate>
+    <atom:link href="https://lumin3t.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hey!!</title>
+      <link>https://lumin3t.github.io/posts/my-first-post/</link>
+      <pubDate>Sun, 23 Feb 2025 15:01:18 +0530</pubDate>
+      <guid>https://lumin3t.github.io/posts/my-first-post/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>A Hacker&#39;s Arsenal</title>
+      <link>https://lumin3t.github.io/posts/my-second-post/</link>
+      <pubDate>Sat, 23 Nov 2024 15:01:18 +0530</pubDate>
+      <guid>https://lumin3t.github.io/posts/my-second-post/</guid>
+      <description>&lt;h3 id=&#34;how-the-heck-do-hackers-stay-undetected-for-so-long&#34;&gt;How the Heck Do Hackers Stay Undetected for So Long?&lt;/h3&gt;&#xA;&lt;p&gt;This blog dives into how hackers manage to stay under the radar, exploring the tools and techniques they use to stay anonymous.&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h1 id=&#34;1-opsec&#34;&gt;1. OpSec&lt;/h1&gt;&#xA;&lt;p&gt;The first step to staying anonymous is all about physical security. &lt;em&gt;Operational security&lt;/em&gt; (OpSec) is a process of preventing sensitive information from slipping into the wrong hands. Hackers, like anyone else concerned with security, have to think like their enemies—identifying potential leaks and vulnerabilities.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

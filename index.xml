@@ -1,11 +1,33 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>My website</title>
-    <link>https://lumi-net.github.io/</link>
-    <description>Recent content on My website</description>
+    <title>My Site</title>
+    <link>https://lumin3t.github.io/</link>
+    <description>Recent content on My Site</description>
     <generator>Hugo</generator>
-    <language>en</language>
-    <atom:link href="https://lumi-net.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language>
+    <lastBuildDate>Sun, 23 Feb 2025 15:01:18 +0530</lastBuildDate>
+    <atom:link href="https://lumin3t.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hey!!</title>
+      <link>https://lumin3t.github.io/posts/my-first-post/</link>
+      <pubDate>Sun, 23 Feb 2025 15:01:18 +0530</pubDate>
+      <guid>https://lumin3t.github.io/posts/my-first-post/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>A Hacker&#39;s Arsenal</title>
+      <link>https://lumin3t.github.io/posts/my-second-post/</link>
+      <pubDate>Sat, 23 Nov 2024 15:01:18 +0530</pubDate>
+      <guid>https://lumin3t.github.io/posts/my-second-post/</guid>
+      <description>&lt;h3 id=&#34;how-the-heck-do-hackers-stay-undetected-for-so-long&#34;&gt;How the Heck Do Hackers Stay Undetected for So Long?&lt;/h3&gt;&#xA;&lt;p&gt;This blog dives into how hackers manage to stay under the radar, exploring the tools and techniques they use to stay anonymous.&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h1 id=&#34;1-opsec&#34;&gt;1. OpSec&lt;/h1&gt;&#xA;&lt;p&gt;The first step to staying anonymous is all about physical security. &lt;em&gt;Operational security&lt;/em&gt; (OpSec) is a process of preventing sensitive information from slipping into the wrong hands. Hackers, like anyone else concerned with security, have to think like their enemies—identifying potential leaks and vulnerabilities.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title></title>
+      <link>https://lumin3t.github.io/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://lumin3t.github.io/about/</guid>
+      <description>&lt;p&gt;Hello, I&amp;rsquo;m [redacted], I go by &amp;ldquo;luminet&amp;rdquo; online. Welcome to my corner of the internet. I like breaking things (ethically), building things (sometimes), and writing about what I learn along the way.&lt;/p&gt;&#xA;&lt;p&gt;Here, you&amp;rsquo;ll find my projects, random thoughts on tech, and whatever else interests me. No unnecessary intros—just what I actually work on and care about.&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;facts-about-me&#34;&gt;&lt;strong&gt;Facts About Me:&lt;/strong&gt;&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;I study Computer Science and Engineering in university.&lt;/li&gt;&#xA;&lt;li&gt;Current focus is on understanding computers from the ground up.&lt;/li&gt;&#xA;&lt;li&gt;I like working on the backend part of applications for hackathons.&lt;/li&gt;&#xA;&lt;li&gt;I like participating in CTFs.&lt;/li&gt;&#xA;&lt;li&gt;Currently reading: &lt;em&gt;Notes from the Underground&lt;/em&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;Check out my &lt;a href=&#34;https://lumin3t.github.io/&#34;&gt;Projects&lt;/a&gt; or &lt;a href=&#34;https://lumin3t.github.io/posts&#34;&gt;Blogs&lt;/a&gt; to see what I’m working on.&lt;/p&gt;</description>
+    </item>
   </channel>
 </rss>
