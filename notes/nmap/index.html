@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><title>My Site</title>
+<meta name="description" content="Hello, I&#39;m [redacted]">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8"/>
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.4/css/academicons.min.css" integrity="sha512-IW0nhlW5MgNydsXJO40En2EoCkTTjZhI3yuODrZIc8cQ4h1XcF53PsqDHa09NqnkXuIe0Oiyyj171BqZFwISBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<link rel="stylesheet" href="http://localhost:1313/css/palettes/tokyo-night-dark.css">
+<link rel="stylesheet" href="http://localhost:1313/css/risotto.css">
+<link rel="stylesheet" href="http://localhost:1313/css/custom.css">
+
+
+
+
+
+
+
+</head>
+
+    <body>
+        <div class="page">
+
+            <header class="page__header"><nav class="page__nav main-nav">
+    <ul>
+    <h1 class="page__logo"><a href="http://localhost:1313/" class="page__logo-inner">My Site</a></h1>
+    
+    
+    <li class="main-nav__item"><a class="nav-main-item" href="http://localhost:1313/about/" title="">About</a></li>
+    
+    <li class="main-nav__item"><a class="nav-main-item" href="http://localhost:1313/notes" title="">Notes</a></li>
+    
+    <li class="main-nav__item"><a class="nav-main-item" href="http://localhost:1313/posts" title="">Posts</a></li>
+    
+    </ul>
+</nav>
+
+</header>
+
+            <section class="page__body">
+    <header class="content__header">
+        <h1></h1>
+    </header>
+    <div class="content__body">
+        <h2 id="tcp-scans">TCP Scans</h2>
+<h4 id="1-tcp-connect-scan--st">1. TCP Connect Scan (<code>-sT</code>)</h4>
+<ul>
+<li><strong>Command</strong>:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap -sT &lt;target&gt;
+</span></span></code></pre></div></li>
+</ul>
+<p>![[WhatsApp Image 2025-04-18 at 12.28.48_93d0df3d.jpg]]</p>
+<ul>
+<li><strong>Behavior</strong>:
+<ul>
+<li>Completes the full TCP 3-way handshake (<code>SYN → SYN/ACK → ACK</code>).<br>
+![[WhatsApp Image 2025-04-18 at 12.28.59_4e3f76ff.jpg]]</li>
+<li><strong>Open Port</strong>: Responds with <code>SYN/ACK</code>.</li>
+<li><strong>Closed Port</strong>: Responds with <code>RST</code>.<br>
+![[WhatsApp Image 2025-04-18 at 12.29.40_d01bc8a8.jpg]]</li>
+<li><strong>Filtered Port</strong>: No response (firewall drops packets).</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-tcp-syn-stealth-scan--ss">2. TCP SYN (Stealth) Scan (<code>-sS</code>)</h4>
+<ul>
+<li><strong>Command (requires root)</strong>:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo nmap -sS &lt;target&gt;
+</span></span></code></pre></div></li>
+<li><strong>Behavior</strong>:
+<ul>
+<li>Half-open scan (sends <code>SYN</code>, expects <code>SYN/ACK</code> for open ports).</li>
+<li><strong>Open Port</strong>: <code>SYN → SYN/ACK</code> → Nmap sends <code>RST</code> instead of <code>ACK</code>.</li>
+<li><strong>Closed Port</strong>: <code>SYN → RST</code>.</li>
+<li><strong>Filtered Port</strong>: No response (firewall drops packets).</li>
+</ul>
+</li>
+<li><strong>Advantages</strong>:
+<ul>
+<li>Stealthier (doesn’t complete the handshake).</li>
+<li>Bypasses older IDS systems that only monitor full connection. (waits for 3 way handshake)</li>
+</ul>
+</li>
+<li><strong>Note</strong>: Requires root privileges (or <code>CAP_NET_RAW</code>/<code>CAP_NET_ADMIN</code> capabilities).</li>
+</ul>
+<h4 id="firewall-evasion-with-iptables">Firewall Evasion with <code>iptables</code></h4>
+<ul>
+<li>If a firewall spoofs closed ports (sends <code>RST</code> for filtered ports):
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>iptables -I INPUT -p tcp --dport &lt;port&gt; -j REJECT --reject-with tcp-reset
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="udp-scan--su">UDP Scan (<code>-sU</code>)</h2>
+<ul>
+<li><strong>Command</strong>:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap -sU --top-ports <span style="color:#ae81ff">20</span> &lt;target&gt;
+</span></span></code></pre></div></li>
+<li><strong>Behavior</strong>:
+<ul>
+<li><strong>Open Port</strong>: No response (or service-specific reply).</li>
+<li><strong>Closed Port</strong>: ICMP &ldquo;Port Unreachable&rdquo; error.</li>
+<li><strong>Filtered Port</strong>: No response.</li>
+</ul>
+</li>
+<li><strong>Note</strong>: Slower than TCP scans (UDP is connectionless).</li>
+</ul>
+<hr>
+<h2 id="stealthy-tcp-scans-firewall-evasion">Stealthy TCP Scans (Firewall Evasion)</h2>
+<h4 id="1-null-scan--sn">1. NULL Scan (<code>-sN</code>)</h4>
+<ul>
+<li><strong>Command</strong>:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap -sN &lt;target&gt;
+</span></span></code></pre></div></li>
+<li><strong>Behavior</strong>:
+<ul>
+<li>Sends a packet with <strong>no TCP flags</strong>.</li>
+<li><strong>Closed Port</strong>: Responds with <code>RST</code>.</li>
+<li><strong>Open/Filtered Port</strong>: No response.</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-fin-scan--sf">2. FIN Scan (<code>-sF</code>)</h4>
+<ul>
+<li><strong>Command</strong>:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap -sF &lt;target&gt;
+</span></span></code></pre></div></li>
+<li><strong>Behavior</strong>:
+<ul>
+<li>Sends a packet with <strong>only the <code>FIN</code> flag</strong> set.</li>
+<li><strong>Closed Port</strong>: Responds with <code>RST</code>.</li>
+<li><strong>Open/Filtered Port</strong>: No response.</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-xmas-scan--sx">3. Xmas Scan (<code>-sX</code>)</h4>
+<ul>
+<li><strong>Command</strong>:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap -sX &lt;target&gt;
+</span></span></code></pre></div></li>
+<li><strong>Behavior</strong>:
+<ul>
+<li>Sends a packet with <strong><code>FIN</code>, <code>PSH</code>, <code>URG</code> flags</strong> (like a &ldquo;blinking Christmas tree&rdquo;).</li>
+<li><strong>Closed Port</strong>: Responds with <code>RST</code>.</li>
+<li><strong>Open/Filtered Port</strong>: No response.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Notes on Stealth Scans</strong></p>
+<ul>
+<li><strong>Windows/Cisco Devices</strong>: Often respond with <code>RST</code> to malformed packets (regardless of port state).</li>
+<li><strong>Firewall Evasion</strong>: Useful when firewalls drop <code>SYN</code> packets.</li>
+</ul>
+<hr>
+<h2 id="ping-sweep--sn">Ping Sweep (<code>-sn</code>)</h2>
+<ul>
+<li><strong>Command</strong>:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap -sn 192.168.0.1-254  
+</span></span><span style="display:flex;"><span>nmap -sn 192.168.0.0/24
+</span></span></code></pre></div></li>
+<li><strong>Behavior</strong>:
+<ul>
+<li>Discovers live hosts using <strong>ARP (LAN) / ICMP (WAN)</strong>.</li>
+<li>Does <strong>not</strong> scan ports.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="nmap-scripting-engine-nse">Nmap Scripting Engine (NSE)</h2>
+<p>Written in LUA</p>
+<ul>
+<li><strong>View Script Help</strong>:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap --script-help &lt;script-name&gt;
+</span></span></code></pre></div></li>
+<li><strong>Search Scripts</strong>:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>grep <span style="color:#e6db74">&#34;ftp&#34;</span> /usr/share/nmap/scripts/script.db
+</span></span><span style="display:flex;"><span>ls -l /usr/share/nmap/scripts/*ftp*
+</span></span></code></pre></div></li>
+<li><strong>Install New Scripts</strong>:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo wget -O /usr/share/nmap/scripts/&lt;script-name&gt;.nse https://svn.nmap.org/nmap/scripts/&lt;script-name&gt;.nse
+</span></span><span style="display:flex;"><span>nmap --script-updatedb
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="firewall-evasion-techniques">Firewall Evasion Techniques</h2>
+<table>
+  <thead>
+      <tr>
+          <th><strong>Option</strong></th>
+          <th><strong>Description</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>-Pn</code></td>
+          <td>Skip host discovery (assume host is up).</td>
+      </tr>
+      <tr>
+          <td><code>-f</code></td>
+          <td>Fragment packets (smaller MTU).</td>
+      </tr>
+      <tr>
+          <td><code>--mtu &lt;number&gt;</code></td>
+          <td>Custom MTU (must be multiple of 8).</td>
+      </tr>
+      <tr>
+          <td><code>--scan-delay &lt;time&gt;ms</code></td>
+          <td>Adds delay between probes.</td>
+      </tr>
+      <tr>
+          <td><code>--badsum</code></td>
+          <td>Sends invalid checksums (tricks firewalls).</td>
+      </tr>
+      <tr>
+          <td><code>--data-length &lt;number&gt;</code></td>
+          <td>Appends random data to packets.</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="service-detection--sv">Service Detection (<code>-sV</code>)</h2>
+<ul>
+<li><strong>Command</strong>:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap -sV &lt;target&gt;
+</span></span></code></pre></div></li>
+<li><strong>Behavior</strong>:
+<ul>
+<li>Probes open ports to detect running services/versions.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="summary-of-common-scan-types">Summary of Common Scan Types</h2>
+<table>
+  <thead>
+      <tr>
+          <th><strong>Scan Type</strong></th>
+          <th><strong>Command</strong></th>
+          <th><strong>Use Case</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>TCP Connect</td>
+          <td><code>nmap -sT</code></td>
+          <td>Non-root scan.</td>
+      </tr>
+      <tr>
+          <td>TCP SYN</td>
+          <td><code>sudo nmap -sS</code></td>
+          <td>Stealthy scan (default for root).</td>
+      </tr>
+      <tr>
+          <td>UDP Scan</td>
+          <td><code>nmap -sU</code></td>
+          <td>Slow but effective for UDP services.</td>
+      </tr>
+      <tr>
+          <td>NULL/FIN/Xmas</td>
+          <td><code>nmap -sN/F/X</code></td>
+          <td>Firewall evasion.</td>
+      </tr>
+      <tr>
+          <td>Ping Sweep</td>
+          <td><code>nmap -sn</code></td>
+          <td>Host discovery.</td>
+      </tr>
+  </tbody>
+</table>
+
+    </div>
+    <footer class="content__footer"></footer>
+
+            </section>
+
+            <section class="page__aside">
+                <div class="aside__about">
+<div class="aside__about">
+    
+<h1 class="about__title">:&gt; Ibha</h1>
+<p class="about__description">Hello, I&rsquo;m [redacted]</p>
+</div>
+
+
+<ul class="aside__social-links">
+    
+    <li>
+        <a href="https://github.com/lumin3t" rel="me" aria-label="GitHub" title="GitHub"><i class="fa-brands fa-github" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+    <li>
+        <a href="mailto:surgeoffrost@proton.me" rel="me" aria-label="Email" title="Email"><i class="fa-solid fa-envelope" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+    <li>
+        <a href="https://dev.to/luminet" rel="me" aria-label="Dev.to" title="Dev.to"><i class="ai ai-orcid" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+    <li>
+        <a href="https://tryhackme.com/luminet" rel="me" aria-label="TryHackMe" title="TryHackMe"><i class="fa-sharp fa-solid fa-cloud" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+</ul>
+</div>
+                <hr>
+                <div class="aside__content">
+    
+    
+
+    
+
+                </div>
+            </section>
+
+            <footer class="page__footer"><p>
+    
+    
+    
+    
+    
+    
+      
+    
+      
+    
+      
+    
+    
+    
+      
+      
+          
+            
+            
+                <br/><span class="active">$ echo $LANG<br/><b></b></span><br/>
+
+            
+          
+      
+    
+</p>
+<br /><br />
+<p class="copyright"></p>
+<p class="advertisement">Powered by <a href="https://gohugo.io/">hugo</a> and <a href="https://github.com/joeroe/risotto">risotto</a>.</p>
+</footer>
+
+        </div>
+    </body>
+
+</html>

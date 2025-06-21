@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head><title>Network Fundamentals &ndash; My Site</title>
+<meta name="description" content="Hello, I&#39;m [redacted]">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8"/>
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.4/css/academicons.min.css" integrity="sha512-IW0nhlW5MgNydsXJO40En2EoCkTTjZhI3yuODrZIc8cQ4h1XcF53PsqDHa09NqnkXuIe0Oiyyj171BqZFwISBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<link rel="stylesheet" href="https://lumin3t.github.io/css/palettes/tokyo-night-dark.css">
+<link rel="stylesheet" href="https://lumin3t.github.io/css/risotto.css">
+<link rel="stylesheet" href="https://lumin3t.github.io/css/custom.css">
+
+
+
+
+
+
+
+</head>
+
+    <body>
+        <div class="page">
+
+            <header class="page__header"><nav class="page__nav main-nav">
+    <ul>
+    <h1 class="page__logo"><a href="https://lumin3t.github.io/" class="page__logo-inner">My Site</a></h1>
+    
+    
+    <li class="main-nav__item"><a class="nav-main-item" href="https://lumin3t.github.io/about/" title="">About</a></li>
+    
+    <li class="main-nav__item"><a class="nav-main-item" href="https://lumin3t.github.io/notes" title="">Notes</a></li>
+    
+    <li class="main-nav__item"><a class="nav-main-item" href="https://lumin3t.github.io/posts" title="">Posts</a></li>
+    
+    </ul>
+</nav>
+
+</header>
+
+            <section class="page__body">
+    <header class="content__header">
+        <h1>Network Fundamentals</h1>
+    </header>
+    <div class="content__body">
+        <hr>
+<h2 id="osi-model"><strong>OSI Model</strong></h2>
+<p><strong>Mnemonic</strong>: <strong>P</strong>lease <strong>D</strong>o <strong>N</strong>ot <strong>T</strong>hrow <strong>S</strong>alami <strong>P</strong>izza <strong>A</strong>way (Layer 7 → 1)</p>
+<table>
+  <thead>
+      <tr>
+          <th>Layer</th>
+          <th>Name</th>
+          <th>Function</th>
+          <th>Examples</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>7</td>
+          <td>Application</td>
+          <td>User apps (HTTP, FTP, email)</td>
+          <td>HTTP, DNS, SMTP, POP3</td>
+      </tr>
+      <tr>
+          <td>6</td>
+          <td>Presentation</td>
+          <td>Data translation (encryption/compression)</td>
+          <td>JPEG, PNG, MPEG, Unicode</td>
+      </tr>
+      <tr>
+          <td>5</td>
+          <td>Session</td>
+          <td>Manages connections (start/stop sessions)</td>
+          <td>NFS, RPC</td>
+      </tr>
+      <tr>
+          <td>4</td>
+          <td>Transport</td>
+          <td>Reliable data delivery (TCP/UDP)</td>
+          <td>TCP (safe), UDP (fast)</td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>Network</td>
+          <td>Logical addressing &amp; routing</td>
+          <td>IP, ICMP, IPSec</td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>Data Link</td>
+          <td>MAC addressing &amp; local delivery</td>
+          <td>Ethernet (802.3), WiFi (802.11)</td>
+      </tr>
+      <tr>
+          <td>1</td>
+          <td>Physical</td>
+          <td>Raw bit transmission (cables, signals)</td>
+          <td>Fiber, Copper, Radio</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="encapsulation"><strong>Encapsulation</strong></h2>
+<p><strong>How data travels down OSI layers</strong>:</p>
+<ol>
+<li><strong>Application</strong>: User data (e.g., email) → Formatted as HTTP/FTP.</li>
+<li><strong>Transport</strong>: Adds <strong>TCP/UDP header</strong> → Creates <em>segment/datagram</em>.</li>
+<li><strong>Network</strong>: Adds <strong>IP header</strong> → Creates <em>packet</em>.</li>
+<li><strong>Data Link</strong>: Adds <strong>MAC header/trailer</strong> → Creates <em>frame</em>.</li>
+<li><strong>Physical</strong>: Converts to bits → Sent via cable/WiFi.</li>
+</ol>
+<p><img src="/Images/Pasted%20image%2020250618123701.png" alt="image"></p>
+<hr>
+<h1 id="core-protocols"><strong>Core Protocols</strong></h1>
+<h2 id="1-dhcp-dynamic-host-configuration-protocol"><strong>1. DHCP (Dynamic Host Configuration Protocol)</strong></h2>
+<ul>
+<li><strong>Purpose</strong>: Auto-assigns IP, subnet, DNS, gateway.</li>
+<li><strong>Port</strong>: UDP 67 (server), 68 (client).</li>
+<li><strong>DORA Process</strong>:
+<ol>
+<li><strong>Discover</strong>: Client broadcasts &ldquo;Need IP&rdquo; (<code>0.0.0.0</code> → <code>255.255.255.255</code>).</li>
+<li><strong>Offer</strong>: Server responds with IP offer.</li>
+<li><strong>Request</strong>: Client accepts.</li>
+<li><strong>Ack</strong>: Server confirms.</li>
+</ol>
+</li>
+</ul>
+<p><img src="/Images/Pasted%20image%2020250618231416.png" alt="image"></p>
+<hr>
+<h2 id="2-arp-address-resolution-protocol"><strong>2. ARP (Address Resolution Protocol)</strong></h2>
+<ul>
+<li><strong>Purpose</strong>: Maps <strong>IP → MAC</strong> address.</li>
+<li><strong>Process</strong>:
+<ul>
+<li><strong>Request</strong>: &ldquo;Who has <code>192.168.1.1</code>?&rdquo; (Broadcast: <code>ff:ff:ff:ff:ff:ff</code>).</li>
+<li><strong>Reply</strong>: &ldquo;<code>192.168.1.1</code> is at <code>44:df:65:d8:fe:6c</code>&rdquo;.</li>
+</ul>
+</li>
+</ul>
+<p><img src="/Images/Pasted%20image%2020250618233217.png" alt="image"></p>
+<hr>
+<h2 id="3-icmp-internet-control-message-protocol"><strong>3. ICMP (Internet Control Message Protocol)</strong></h2>
+<ul>
+<li><strong>Purpose</strong>: Network troubleshooting (<code>ping</code>, <code>traceroute</code>).</li>
+<li><strong>Commands</strong>:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ping &lt;IP&gt; -c <span style="color:#ae81ff">4</span>       <span style="color:#75715e"># Stop after 4 packets</span>
+</span></span><span style="display:flex;"><span>traceroute google.com <span style="color:#75715e"># Path to destination</span>
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="4-dns-domain-name-system"><strong>4. DNS (Domain Name System)</strong></h2>
+<ul>
+<li><strong>Purpose</strong>: Resolves <code>example.com</code> → <code>93.184.215.14</code>.</li>
+<li><strong>Record Types</strong>:
+<ul>
+<li><strong>A</strong>: IPv4 address.</li>
+<li><strong>AAAA</strong>: IPv6 address.</li>
+<li><strong>CNAME</strong>: Alias (<code>www.example.com</code> → <code>example.com</code>).</li>
+<li><strong>MX</strong>: Mail server.</li>
+</ul>
+</li>
+<li><strong>Tools</strong>:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nslookup example.com  <span style="color:#75715e"># Query DNS</span>
+</span></span><span style="display:flex;"><span>whois example.com     <span style="color:#75715e"># Domain ownership</span>
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="5-httphttps"><strong>5. HTTP/HTTPS</strong></h2>
+<table>
+  <thead>
+      <tr>
+          <th>Feature</th>
+          <th>HTTP (Port 80)</th>
+          <th>HTTPS (Port 443)</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Security</strong></td>
+          <td>Plaintext</td>
+          <td>Encrypted (TLS)</td>
+      </tr>
+      <tr>
+          <td><strong>Methods</strong></td>
+          <td>GET, POST, PUT, DELETE</td>
+          <td>Same + TLS</td>
+      </tr>
+  </tbody>
+</table>
+<p><img src="/Images/Pasted%20image%2020250619163505.png" alt="image"></p>
+<hr>
+<h2 id="6-ftp-file-transfer-protocol"><strong>6. FTP (File Transfer Protocol)</strong></h2>
+<ul>
+<li><strong>Port</strong>: 21 (control), 20 (data).</li>
+<li><strong>Commands</strong>:
+<ul>
+<li><code>USER</code>, <code>PASS</code>: Login.</li>
+<li><code>RETR</code>: Download.</li>
+<li><code>STOR</code>: Upload.</li>
+</ul>
+</li>
+</ul>
+<p><img src="/Images/Pasted%20image%2020250619163702.png" alt="image"></p>
+<hr>
+<h2 id="7-smtp-email-sending"><strong>7. SMTP (Email Sending)</strong></h2>
+<ul>
+<li><strong>Port</strong>: 25 (unencrypted), 465/587 (encrypted).</li>
+<li><strong>Commands</strong>:
+<ul>
+<li><code>HELO</code>: Start session.</li>
+<li><code>MAIL FROM</code>: Sender.</li>
+<li><code>RCPT TO</code>: Recipient.</li>
+<li><code>DATA</code>: Email content.</li>
+</ul>
+</li>
+</ul>
+<p><img src="/Images/5f04259cf9bf5b57aed2c476-1719849634602.png" alt="image"></p>
+<hr>
+<h2 id="8-pop3imap-email-retrieval"><strong>8. POP3/IMAP (Email Retrieval)</strong></h2>
+<table>
+  <thead>
+      <tr>
+          <th><strong>POP3</strong> (Port 110)</th>
+          <th><strong>IMAP</strong> (Port 143)</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Downloads &amp; deletes</td>
+          <td>Syncs across devices</td>
+      </tr>
+  </tbody>
+</table>
+<p><img src="/Images/Pasted%20image%2020250619164159.png" alt="image"></p>
+<hr>
+<h2 id="secure-protocols-tlsssl"><strong>Secure Protocols (TLS/SSL)</strong></h2>
+<ul>
+<li><strong>HTTPS</strong>: HTTP + TLS (Port 443).</li>
+<li><strong>SSH</strong>: Encrypted remote access (Port 22).</li>
+<li><strong>SMTPS</strong>: SMTP + TLS (Port 465/587).</li>
+</ul>
+<p><img src="/Images/Pasted%20image%2020250619202400.png" alt="image"></p>
+
+    </div>
+    <footer class="content__footer"></footer>
+
+            </section>
+
+            <section class="page__aside">
+                <div class="aside__about">
+<div class="aside__about">
+    
+<h1 class="about__title">:&gt; Ibha</h1>
+<p class="about__description">Hello, I&rsquo;m [redacted]</p>
+</div>
+
+
+<ul class="aside__social-links">
+    
+    <li>
+        <a href="https://github.com/lumin3t" rel="me" aria-label="GitHub" title="GitHub"><i class="fa-brands fa-github" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+    <li>
+        <a href="mailto:surgeoffrost@proton.me" rel="me" aria-label="Email" title="Email"><i class="fa-solid fa-envelope" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+    <li>
+        <a href="https://dev.to/luminet" rel="me" aria-label="Dev.to" title="Dev.to"><i class="ai ai-orcid" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+    <li>
+        <a href="https://tryhackme.com/p/luminet" rel="me" aria-label="TryHackMe" title="TryHackMe"><i class="fa-sharp fa-solid fa-cloud" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+</ul>
+</div>
+                <hr>
+                <div class="aside__content">
+    
+    
+        <p>
+            
+            2025-06-21
+        </p>
+    
+
+    
+
+                </div>
+            </section>
+
+            <footer class="page__footer"><p>
+    
+    
+    
+    
+    
+    
+      
+    
+      
+    
+      
+    
+    
+    
+      
+      
+          
+            
+            
+                <br/><span class="active">$ echo $LANG<br/><b></b></span><br/>
+
+            
+          
+      
+    
+</p>
+<br /><br />
+<p class="copyright"></p>
+<p class="advertisement">Powered by <a href="https://gohugo.io/">hugo</a> and <a href="https://github.com/joeroe/risotto">risotto</a>.</p>
+</footer>
+
+        </div>
+    </body>
+
+</html>

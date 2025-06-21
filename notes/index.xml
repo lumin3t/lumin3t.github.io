@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Notes on My Site</title>
+    <link>https://lumin3t.github.io/notes/</link>
+    <description>Recent content in Notes on My Site</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 21 Jun 2025 17:04:53 +0530</lastBuildDate>
+    <atom:link href="https://lumin3t.github.io/notes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Network Fundamentals</title>
+      <link>https://lumin3t.github.io/notes/network-fundamentals/</link>
+      <pubDate>Sat, 21 Jun 2025 17:04:53 +0530</pubDate>
+      <guid>https://lumin3t.github.io/notes/network-fundamentals/</guid>
+      <description>&lt;hr&gt;&#xA;&lt;h2 id=&#34;osi-model&#34;&gt;&lt;strong&gt;OSI Model&lt;/strong&gt;&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;Mnemonic&lt;/strong&gt;: &lt;strong&gt;P&lt;/strong&gt;lease &lt;strong&gt;D&lt;/strong&gt;o &lt;strong&gt;N&lt;/strong&gt;ot &lt;strong&gt;T&lt;/strong&gt;hrow &lt;strong&gt;S&lt;/strong&gt;alami &lt;strong&gt;P&lt;/strong&gt;izza &lt;strong&gt;A&lt;/strong&gt;way (Layer 7 → 1)&lt;/p&gt;&#xA;&lt;table&gt;&#xA;  &lt;thead&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;th&gt;Layer&lt;/th&gt;&#xA;          &lt;th&gt;Name&lt;/th&gt;&#xA;          &lt;th&gt;Function&lt;/th&gt;&#xA;          &lt;th&gt;Examples&lt;/th&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/thead&gt;&#xA;  &lt;tbody&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;7&lt;/td&gt;&#xA;          &lt;td&gt;Application&lt;/td&gt;&#xA;          &lt;td&gt;User apps (HTTP, FTP, email)&lt;/td&gt;&#xA;          &lt;td&gt;HTTP, DNS, SMTP, POP3&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;6&lt;/td&gt;&#xA;          &lt;td&gt;Presentation&lt;/td&gt;&#xA;          &lt;td&gt;Data translation (encryption/compression)&lt;/td&gt;&#xA;          &lt;td&gt;JPEG, PNG, MPEG, Unicode&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;5&lt;/td&gt;&#xA;          &lt;td&gt;Session&lt;/td&gt;&#xA;          &lt;td&gt;Manages connections (start/stop sessions)&lt;/td&gt;&#xA;          &lt;td&gt;NFS, RPC&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;4&lt;/td&gt;&#xA;          &lt;td&gt;Transport&lt;/td&gt;&#xA;          &lt;td&gt;Reliable data delivery (TCP/UDP)&lt;/td&gt;&#xA;          &lt;td&gt;TCP (safe), UDP (fast)&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;3&lt;/td&gt;&#xA;          &lt;td&gt;Network&lt;/td&gt;&#xA;          &lt;td&gt;Logical addressing &amp;amp; routing&lt;/td&gt;&#xA;          &lt;td&gt;IP, ICMP, IPSec&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;2&lt;/td&gt;&#xA;          &lt;td&gt;Data Link&lt;/td&gt;&#xA;          &lt;td&gt;MAC addressing &amp;amp; local delivery&lt;/td&gt;&#xA;          &lt;td&gt;Ethernet (802.3), WiFi (802.11)&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;1&lt;/td&gt;&#xA;          &lt;td&gt;Physical&lt;/td&gt;&#xA;          &lt;td&gt;Raw bit transmission (cables, signals)&lt;/td&gt;&#xA;          &lt;td&gt;Fiber, Copper, Radio&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;encapsulation&#34;&gt;&lt;strong&gt;Encapsulation&lt;/strong&gt;&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;How data travels down OSI layers&lt;/strong&gt;:&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

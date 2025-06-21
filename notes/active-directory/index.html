@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><title>My Site</title>
+<meta name="description" content="Hello, I&#39;m [redacted]">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8"/>
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.4/css/academicons.min.css" integrity="sha512-IW0nhlW5MgNydsXJO40En2EoCkTTjZhI3yuODrZIc8cQ4h1XcF53PsqDHa09NqnkXuIe0Oiyyj171BqZFwISBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<link rel="stylesheet" href="http://localhost:1313/css/palettes/tokyo-night-dark.css">
+<link rel="stylesheet" href="http://localhost:1313/css/risotto.css">
+<link rel="stylesheet" href="http://localhost:1313/css/custom.css">
+
+
+
+
+
+
+
+</head>
+
+    <body>
+        <div class="page">
+
+            <header class="page__header"><nav class="page__nav main-nav">
+    <ul>
+    <h1 class="page__logo"><a href="http://localhost:1313/" class="page__logo-inner">My Site</a></h1>
+    
+    
+    <li class="main-nav__item"><a class="nav-main-item" href="http://localhost:1313/about/" title="">About</a></li>
+    
+    <li class="main-nav__item"><a class="nav-main-item" href="http://localhost:1313/notes" title="">Notes</a></li>
+    
+    <li class="main-nav__item"><a class="nav-main-item" href="http://localhost:1313/posts" title="">Posts</a></li>
+    
+    </ul>
+</nav>
+
+</header>
+
+            <section class="page__body">
+    <header class="content__header">
+        <h1></h1>
+    </header>
+    <div class="content__body">
+        <p>![[Pasted image 20250606181826.png]]
+Active Directory (AD) is a directory service developed by Microsoft for managing users, computers, and other resources in a Windows domain network. It provides centralized authentication and authorization, allowing administrators to control access to network resources efficiently.</p>
+<ul>
+<li><strong>Centralised identity management</strong></li>
+<li><strong>Managing security policies</strong></li>
+</ul>
+<ol>
+<li>In a Windows domain, credentials are stored in a centralised repository called&hellip;</li>
+</ol>
+<pre tabindex="0"><code>Active Directory 
+</code></pre><ol start="2">
+<li>The server in charge of running the Active Directory services is called&hellip;</li>
+</ol>
+<pre tabindex="0"><code>Domain Controller
+</code></pre><p><strong>Active Directory Domain Service (AD DS)</strong></p>
+<p>Users are security principals
+assigned privileges over <strong>resources</strong>
+people (regular users) and services (perms to run services like sql or smn)</p>
+<p>The machine account name is the computer&rsquo;s name followed by a dollar sign. For example, a machine named <code>DC01</code> will have a machine account called <code>DC01$</code>. (security princlipes)</p>
+<table>
+  <thead>
+      <tr>
+          <th></th>
+          <th></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Security Group</strong></td>
+          <td><strong>Description</strong></td>
+      </tr>
+      <tr>
+          <td>Domain Admins</td>
+          <td>Users of this group have administrative privileges over the entire domain. By default, they can administer any computer on the domain, including the DCs.</td>
+      </tr>
+      <tr>
+          <td>Server Operators</td>
+          <td>Users in this group can administer Domain Controllers. They cannot change any administrative group memberships.</td>
+      </tr>
+      <tr>
+          <td>Backup Operators</td>
+          <td>Users in this group are allowed to access any file, ignoring their permissions. They are used to perform backups of data on computers.</td>
+      </tr>
+      <tr>
+          <td>Account Operators</td>
+          <td>Users in this group can create or modify other accounts in the domain.</td>
+      </tr>
+      <tr>
+          <td>Domain Users</td>
+          <td>Includes all existing user accounts in the domain.</td>
+      </tr>
+      <tr>
+          <td>Domain Computers</td>
+          <td>Includes all existing computers in the domain.</td>
+      </tr>
+      <tr>
+          <td>Domain Controllers</td>
+          <td>Includes all existing DCs on the domain.</td>
+      </tr>
+      <tr>
+          <td><strong>Organizational Units (OUs)</strong></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>![[Pasted image 20250606183503.png]]</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>THM - 4 child OUs</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>only 1 OU at a time (applies policies) many groups at once (security groups grant perms to resources)</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p>delegation
+advanced features -&gt; object -&gt; prvent accidental deletion</p>
+<p>managing computers in AD:
+<strong>1. Workstations</strong>
+<strong>2. Servers</strong>
+<strong>3. Domain Controllers</strong></p>
+<p><strong>Group Policy Objects (GPO)</strong>
+<strong>Group Policy Management</strong>
+![[Pasted image 20250606224553.png]]
+and
+![[Pasted image 20250606224800.png]]
+add to ou by dragging GPOs into them
+![[Pasted image 20250606224845.png]]</p>
+<h2 id="authentication">Authentication</h2>
+<ul>
+<li><strong>Kerberos:</strong> Used by any recent version of Windows. This is the default protocol in any recent domain.</li>
+<li><strong>NetNTLM:</strong> Legacy authentication protocol kept for compatibility purposes.</li>
+</ul>
+<p><strong>Key Distribution Center (KDC)</strong>
+<strong>Ticket Granting Ticket (TGT)</strong> + session key
+![[Pasted image 20250606230226.png]]
+ticket granting service -&gt; <strong>Service Principal Name (SPN)</strong>
+![[Pasted image 20250606230431.png]]
+and
+![[Pasted image 20250606230441.png]]</p>
+<p>NetNTLM:
+![[Pasted image 20250606230609.png]]</p>
+<p>Same namespace: Trees
+![[Pasted image 20250606230849.png]]
+Different namespace: Forests
+![[Pasted image 20250606230935.png]]</p>
+<p>THM UK might need to access a shared file in one of MHT ASIA servers. For this to happen, domains arranged in trees and forests are joined together by <strong>trust relationships</strong>.
+<strong>one-way trust relationship</strong>. In a one-way trust, if <code>Domain AAA</code> trusts <code>Domain BBB</code>, this means that a user on BBB can be authorised to access resources on AAA:</p>
+<p><img src="https://tryhackme-images.s3.amazonaws.com/user-uploads/5ed5961c6276df568891c3ea/room-content/af95eb1a4b6c672491d8989f79c00200.png" alt="Trusts">
+two way also can be done</p>
+<p>If you are interested in learning how to secure an Active Directory installation, be sure to check out the <a href="https://tryhackme.com/room/activedirectoryhardening">Active Directory Hardening Room</a>. If, on the other hand, you&rsquo;d like to know how attackers can take advantage of common AD misconfigurations and other AD hacking techniques, the <a href="https://tryhackme.com/module/hacking-active-directory">Compromising Active Directory module</a> is the way to go.</p>
+
+    </div>
+    <footer class="content__footer"></footer>
+
+            </section>
+
+            <section class="page__aside">
+                <div class="aside__about">
+<div class="aside__about">
+    
+<h1 class="about__title">:&gt; Ibha</h1>
+<p class="about__description">Hello, I&rsquo;m [redacted]</p>
+</div>
+
+
+<ul class="aside__social-links">
+    
+    <li>
+        <a href="https://github.com/lumin3t" rel="me" aria-label="GitHub" title="GitHub"><i class="fa-brands fa-github" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+    <li>
+        <a href="mailto:surgeoffrost@proton.me" rel="me" aria-label="Email" title="Email"><i class="fa-solid fa-envelope" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+    <li>
+        <a href="https://dev.to/luminet" rel="me" aria-label="Dev.to" title="Dev.to"><i class="ai ai-orcid" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+    <li>
+        <a href="https://tryhackme.com/luminet" rel="me" aria-label="TryHackMe" title="TryHackMe"><i class="fa-sharp fa-solid fa-cloud" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+</ul>
+</div>
+                <hr>
+                <div class="aside__content">
+    
+    
+
+    
+
+                </div>
+            </section>
+
+            <footer class="page__footer"><p>
+    
+    
+    
+    
+    
+    
+      
+    
+      
+    
+      
+    
+    
+    
+      
+      
+          
+            
+            
+                <br/><span class="active">$ echo $LANG<br/><b></b></span><br/>
+
+            
+          
+      
+    
+</p>
+<br /><br />
+<p class="copyright"></p>
+<p class="advertisement">Powered by <a href="https://gohugo.io/">hugo</a> and <a href="https://github.com/joeroe/risotto">risotto</a>.</p>
+</footer>
+
+        </div>
+    </body>
+
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><title>My Site</title>
+<meta name="description" content="Hello, I&#39;m [redacted]">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8"/>
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.4/css/academicons.min.css" integrity="sha512-IW0nhlW5MgNydsXJO40En2EoCkTTjZhI3yuODrZIc8cQ4h1XcF53PsqDHa09NqnkXuIe0Oiyyj171BqZFwISBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<link rel="stylesheet" href="http://localhost:1313/css/palettes/tokyo-night-dark.css">
+<link rel="stylesheet" href="http://localhost:1313/css/risotto.css">
+<link rel="stylesheet" href="http://localhost:1313/css/custom.css">
+
+
+
+
+
+
+
+</head>
+
+    <body>
+        <div class="page">
+
+            <header class="page__header"><nav class="page__nav main-nav">
+    <ul>
+    <h1 class="page__logo"><a href="http://localhost:1313/" class="page__logo-inner">My Site</a></h1>
+    
+    
+    <li class="main-nav__item"><a class="nav-main-item" href="http://localhost:1313/about/" title="">About</a></li>
+    
+    <li class="main-nav__item"><a class="nav-main-item" href="http://localhost:1313/notes" title="">Notes</a></li>
+    
+    <li class="main-nav__item"><a class="nav-main-item" href="http://localhost:1313/posts" title="">Posts</a></li>
+    
+    </ul>
+</nav>
+
+</header>
+
+            <section class="page__body">
+    <header class="content__header">
+        <h1></h1>
+    </header>
+    <div class="content__body">
+        <p>![[Pasted image 20250606184245.png]]
+domain - <strong>typosquatting</strong>
+query string- injections
+![[Pasted image 20250606184450.png]]</p>
+<p>start line
+headers
+empty line
+body
+![[Pasted image 20250607131339.png]]</p>
+<h4 id="http-headers">HTTP Headers</h4>
+<p>**GET<br>
+<strong>fetch</strong> data  (Avoid putting sensitive info like tokens or passwords in GET requests since they can show up as plaintext.)</p>
+<p><strong>POST<br>
+Sends</strong> data to the server (Always validate and clean the input to avoid attacks like SQL injection or XSS.)</p>
+<p><strong>PUT<br>
+Replaces or updates</strong> something on the server. (Make sure the user is authorised to make chg)</p>
+<p><strong>DELETE<br>
+Removes</strong> something from the server. (authorized)</p>
+<p>Besides these common methods, there are a few others used in specific cases:</p>
+<p><strong>PATCH</strong>
+Updates part of a resource. (small chg)</p>
+<p><strong>HEAD</strong><br>
+Works like GET but only retrieves headers, not the full content. (checking metadata without downloading the full response)</p>
+<p><strong>OPTIONS</strong><br>
+Tells you what methods are available for a specific resource, helping clients understand what they can do with the server.</p>
+<p><strong>TRACE</strong>
+Similar to OPTIONS, it shows which methods are allowed, often for debugging. Many servers disable it for security reasons.</p>
+<p><strong>CONNECT</strong><br>
+Used to create a secure connection, like for HTTPS. It’s not as common but is critical for encrypted communication</p>
+<ul>
+<li>Validate the URL path to prevent unauthorised access</li>
+<li>Sanitise the path to avoid injection attacks</li>
+<li>Protect sensitive data by conducting privacy and risk assessments</li>
+</ul>
+<p>versions:
+HTTP/0.9 - only get
+1.0 diff content
+1.1 widely used</p>
+<p>xml json formdata</p>
+<p>default content-type:</p>
+<pre tabindex="0"><code>application/x-www-form-urlencoded
+</code></pre><p>status line</p>
+<ol>
+<li><strong>HTTP Version</strong></li>
+<li><strong>Status Code</strong></li>
+<li><strong>Reason Phrase</strong></li>
+</ol>
+<p><strong>Informational Responses (100-199)</strong><br>
+These codes mean the server has received part of the request and is waiting for the rest. It’s a &ldquo;keep going&rdquo; signal.</p>
+<p><strong>Successful Responses (200-299)</strong><br>
+These codes mean everything worked as expected. The server processed the request and sent back the requested data.</p>
+<p><strong>Redirection Messages (300-399)</strong><br>
+These codes tell you that the resource you requested has moved to a different location, usually providing the new URL.</p>
+<p><strong>Client Error Responses (400-499)</strong><br>
+These codes indicate a problem with the request. Maybe the URL is wrong, or you’re missing some required info, like authentication.</p>
+<p><strong>Server Error Responses (500-599)</strong><br>
+These codes mean the server encountered an error while trying to fulfil the request. These are usually server-side issues and not the client’s fault.</p>
+<p>![[Pasted image 20250607133022.png]]</p>
+<ul>
+<li>
+<p><strong>Set-Cookie</strong>:<br>
+Example: <code>Set-Cookie: sessionId=38af1337es7a8</code><br>
+This one sends cookies from the server to the client, which the client then stores and sends back with future requests. To keep things secure, make sure cookies are set with the <code>HttpOnly</code> flag (so they can’t be accessed by JavaScript) and the <code>Secure</code> flag (so they’re only sent over HTTPS).</p>
+</li>
+<li>
+<p><strong>Cache-Control</strong>:<br>
+Example: <code>Cache-Control: max-age=600</code><br>
+This header tells the client how long it can cache the response before checking with the server again. It can also prevent sensitive info from being cached if needed (using <code>no-cache</code>).</p>
+</li>
+<li>
+<p><strong>Location</strong>:<br>
+Example: <code>Location: /index.html</code><br>
+This one’s used in redirection (3xx) responses. It tells the client where to go next if the resource has moved. If users can modify this header during requests, be careful to validate and sanitise it—otherwise, you could end up with open redirect vulnerabilities, where attackers can redirect users to harmful sites.</p>
+</li>
+</ul>
+<h4 id="security-headers">Security headers</h4>
+<p><code>Content-Security-Policy: default-src 'self'; script-src 'self' https://cdn.tryhackme.com; style-src 'self'</code>
+<code>Strict-Transport-Security: max-age=63072000; includeSubDomains; preload</code>
+<code>X-Content-Type-Options: nosniff</code> ; dont preguess mime (Multipurpose Internet Mail Extensions)</p>
+<ul>
+<li><code>Referrer-Policy: no-referrer</code></li>
+<li><code>Referrer-Policy: same-origin</code></li>
+<li><code>Referrer-Policy: strict-origin</code></li>
+<li><code>Referrer-Policy: strict-origin-when-cross-origin</code></li>
+</ul>
+<p><strong>STRIDE</strong> (<strong>S</strong>poofing identity, <strong>T</strong>ampering with data, <strong>R</strong>epudiation threats, <strong>I</strong>nformation disclosure, <strong>D</strong>enial of Service and <strong>E</strong>levation of privileges) and <strong>PASTA</strong> (<strong>P</strong>rocess for <strong>A</strong>ttack <strong>S</strong>imulation and <strong>T</strong>hreat <strong>A</strong>nalysis) infosec never tasted so good!.
+<strong>C</strong>omputer <strong>S</strong>ecurity <strong>I</strong>ncident <strong>R</strong>esponse <strong>T</strong>eam (<strong>CSIRT</strong>)</p>
+
+    </div>
+    <footer class="content__footer"></footer>
+
+            </section>
+
+            <section class="page__aside">
+                <div class="aside__about">
+<div class="aside__about">
+    
+<h1 class="about__title">:&gt; Ibha</h1>
+<p class="about__description">Hello, I&rsquo;m [redacted]</p>
+</div>
+
+
+<ul class="aside__social-links">
+    
+    <li>
+        <a href="https://github.com/lumin3t" rel="me" aria-label="GitHub" title="GitHub"><i class="fa-brands fa-github" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+    <li>
+        <a href="mailto:surgeoffrost@proton.me" rel="me" aria-label="Email" title="Email"><i class="fa-solid fa-envelope" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+    <li>
+        <a href="https://dev.to/luminet" rel="me" aria-label="Dev.to" title="Dev.to"><i class="ai ai-orcid" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+    <li>
+        <a href="https://tryhackme.com/luminet" rel="me" aria-label="TryHackMe" title="TryHackMe"><i class="fa-sharp fa-solid fa-cloud" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+</ul>
+</div>
+                <hr>
+                <div class="aside__content">
+    
+    
+
+    
+
+                </div>
+            </section>
+
+            <footer class="page__footer"><p>
+    
+    
+    
+    
+    
+    
+      
+    
+      
+    
+      
+    
+    
+    
+      
+      
+          
+            
+            
+                <br/><span class="active">$ echo $LANG<br/><b></b></span><br/>
+
+            
+          
+      
+    
+</p>
+<br /><br />
+<p class="copyright"></p>
+<p class="advertisement">Powered by <a href="https://gohugo.io/">hugo</a> and <a href="https://github.com/joeroe/risotto">risotto</a>.</p>
+</footer>
+
+        </div>
+    </body>
+
+</html>

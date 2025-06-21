@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><title>My Site</title>
+<meta name="description" content="Hello, I&#39;m [redacted]">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8"/>
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.4/css/academicons.min.css" integrity="sha512-IW0nhlW5MgNydsXJO40En2EoCkTTjZhI3yuODrZIc8cQ4h1XcF53PsqDHa09NqnkXuIe0Oiyyj171BqZFwISBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<link rel="stylesheet" href="http://localhost:1313/css/palettes/tokyo-night-dark.css">
+<link rel="stylesheet" href="http://localhost:1313/css/risotto.css">
+<link rel="stylesheet" href="http://localhost:1313/css/custom.css">
+
+
+
+
+
+
+
+</head>
+
+    <body>
+        <div class="page">
+
+            <header class="page__header"><nav class="page__nav main-nav">
+    <ul>
+    <h1 class="page__logo"><a href="http://localhost:1313/" class="page__logo-inner">My Site</a></h1>
+    
+    
+    <li class="main-nav__item"><a class="nav-main-item" href="http://localhost:1313/about/" title="">About</a></li>
+    
+    <li class="main-nav__item"><a class="nav-main-item" href="http://localhost:1313/notes" title="">Notes</a></li>
+    
+    <li class="main-nav__item"><a class="nav-main-item" href="http://localhost:1313/posts" title="">Posts</a></li>
+    
+    </ul>
+</nav>
+
+</header>
+
+            <section class="page__body">
+    <header class="content__header">
+        <h1></h1>
+    </header>
+    <div class="content__body">
+        <h1 id="incident-handling-with-splunk">Incident Handling with Splunk</h1>
+<h3 id="executive-summary">Executive Summary</h3>
+<p>Wayne Enterprises recently experienced a cyberattack culminating in the defacement of their public-facing website, <a href="http://www.imreallynotbatman.com">http://www.imreallynotbatman.com</a>. The defacement displayed the attackers&rsquo; trademark and a &ldquo;YOUR SITE HAS BEEN DEFACED&rdquo; message.
+This report details the investigation into the incident, leveraging various log sources ingested into Splunk, including web server, firewall, IDS (Suricata), and endpoint (Sysmon) logs. The analysis follows the Cyber Kill Chain methodology to reconstruct the attack timeline and identify key indicators of compromise (IOCs) and vulnerabilities exploited.</p>
+<h3 id="incident-details">Incident Details</h3>
+<ul>
+<li><strong>Organization Affected:</strong> Wayne Enterprises</li>
+<li><strong>Affected Asset:</strong> Web server hosting <code>http://www.imreallynotbatman.com</code></li>
+<li><strong>Attack Outcome:</strong> Website Defacement</li>
+<li><strong>Attackers&rsquo; Trademark:</strong> Displayed on defaced website with the message &ldquo;YOUR SITE HAS BEEN DEFACED&rdquo;.</li>
+</ul>
+<p>![[dcc528c218e8dda78504f55f58188575.png]]</p>
+<h3 id="data-sources-and-tools">Data Sources and Tools</h3>
+<p>The investigation primarily utilized Splunk, with logs ingested from the following sources:</p>
+<table>
+  <thead>
+      <tr>
+          <th></th>
+          <th></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Log Source</strong></td>
+          <td><strong>Details</strong></td>
+      </tr>
+      <tr>
+          <td><strong>wineventlog</strong></td>
+          <td>Contains Windows Event logs, providing insights into system activities.</td>
+      </tr>
+      <tr>
+          <td><strong>winRegistry</strong></td>
+          <td>Logs related to registry creation, modification, or deletion, crucial for detecting persistence mechanisms.</td>
+      </tr>
+      <tr>
+          <td><strong>XmlWinEventLog</strong></td>
+          <td>Contains Sysmon event logs, offering detailed process activity, network connections, and file system changes. A very important log source for investigation.</td>
+      </tr>
+      <tr>
+          <td><strong>fortigate_utm</strong></td>
+          <td>Fortinet Firewall logs, showing network traffic, blocked connections, and security policies.</td>
+      </tr>
+      <tr>
+          <td><strong>iis</strong></td>
+          <td>IIS web server logs, detailing HTTP requests, user agents, and accessed resources.</td>
+      </tr>
+      <tr>
+          <td><strong>Nessus:scan</strong></td>
+          <td>Results from Nessus vulnerability scanner, identifying known vulnerabilities on scanned systems.</td>
+      </tr>
+      <tr>
+          <td><strong>Suricata</strong></td>
+          <td>Details of alerts from the Suricata IDS, indicating triggered rules, alert categories, and contributing factors. A very important log source for the Investigation.</td>
+      </tr>
+      <tr>
+          <td><strong>stream:http</strong></td>
+          <td>Network flow data specific to HTTP traffic, providing a comprehensive view of web communications.</td>
+      </tr>
+      <tr>
+          <td><strong>stream:DNS</strong></td>
+          <td>Network flow data related to DNS traffic, useful for identifying command and control (C2) channels.</td>
+      </tr>
+      <tr>
+          <td><strong>stream:icmp</strong></td>
+          <td>Network flow data related to ICMP traffic, often used for reconnaissance and basic connectivity checks.</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="cyber-kill-chain-analysis">Cyber Kill Chain Analysis</h3>
+<p>The investigation adopted the Cyber Kill Chain framework to systematically analyze the attack phases:</p>
+<ol>
+<li><strong>Reconnaissance:</strong> Attackers gather information about the target.</li>
+<li><strong>Weaponization:</strong> Attackers create an exploit payload.</li>
+<li><strong>Delivery:</strong> Attackers transmit the weaponized payload to the target.</li>
+<li><strong>Exploitation:</strong> Attackers trigger the vulnerability to gain initial access.</li>
+<li><strong>Installation:</strong> Attackers establish persistence on the compromised system.</li>
+<li><strong>Command &amp; Control (C2):</strong> Attackers establish a communication channel with the compromised system.</li>
+<li><strong>Actions on Objectives:</strong> Attackers achieve their ultimate goals (e.g., data exfiltration, defacement).</li>
+</ol>
+<h1 id="reconnaissance-phase-analysis">Reconnaissance Phase Analysis</h1>
+<p>The reconnaissance phase involves the attacker attempting to understand the target system&rsquo;s vulnerabilities and architecture, including enumeration and scanning activities. Our primary goal was to identify how the attackers gained initial access and what tools they used for scanning.</p>
+<p>Splunk Query for Initial Reconnaissance:</p>
+<p>To begin, we searched for all logs related to imreallynotbatman.com across <strong>all time</strong> in the botsv1 index:</p>
+<pre tabindex="0"><code>index=botsv1 imreallynotbatman.com
+</code></pre><p>To narrow down to web traffic, we specifically looked at <code>stream:http</code> sourcetype:</p>
+<pre tabindex="0"><code>index=botsv1 imreallynotbatman.com sourcetype=stream:http
+</code></pre><p>Key Fields for Investigation:</p>
+<p>The src_ip field was crucial for identifying the attacker&rsquo;s IP address.</p>
+<p>![[Pasted image 20250618202509.png]]</p>
+<p>Upon identifying <code>40.80.148.42</code> as a suspicious source IP, we cross-referenced it with Suricata IDS logs to confirm malicious activity:</p>
+<pre tabindex="0"><code>index=botsv1 sourcetype=Suricata src_ip=40.80.148.42
+</code></pre><p>This confirmed that the identified IP address was indeed associated with the attacker&rsquo;s activities.</p>
+<h3 id="solutions">Solutions:</h3>
+<ol>
+<li>
+<p><strong>One Suricata alert highlighted the CVE value associated with the attack attempt. What is the CVE value?</strong></p>
+<p>To identify the CVE, we filtered Suricata alerts for the attacker&rsquo;s IP address and then investigated the <code>alert_category</code> field.</p>
+<p>Code snippet</p>
+<pre tabindex="0"><code>index=botsv1 sourcetype=Suricata src_ip=40.80.148.42
+</code></pre><p>We observed various <code>alert_category</code> values. Focusing on &ldquo;Attempted Administrator Privilege Gain&rdquo; was a logical next step to uncover potential exploits.</p>
+<p>![[Pasted image 20250618203645.png]]</p>
+<p>By drilling down into alerts categorized as &ldquo;Attempted Administrator Privilege Gain&rdquo; (or similar relevant categories), we found the specific CVE mentioned in the alert details.</p>
+<pre tabindex="0"><code>index=botsv1 sourcetype=Suricata src_ip=40.80.148.42 alert_category=&#34;Attempted Administrator Privilege Gain&#34;
+</code></pre><p>The alert details pointed to the &ldquo;ShellShock&rdquo; vulnerability, specifically referencing the initial incorrect fix and subsequent CVE.</p>
+<p>![[Screenshot 2025-06-18 203713.png]]</p>
+</li>
+</ol>
+<blockquote>
+<p><code>CVE-2014-6271</code></p></blockquote>
+<ol start="2">
+<li>
+<p><strong>What is the CMS our web server is using?</strong></p>
+<p>Content Management Systems (CMS) are software platforms designed to help users create, manage, and modify digital content. Popular examples include WordPress, Joomla, Drupal, and Squarespace, each offering distinct features. To identify the CMS, we examined the <code>url</code> field within the <code>stream:http</code> logs, as CMS installations often leave distinctive patterns in URLs.</p>
+<pre tabindex="0"><code>index=botsv1 sourcetype=stream:http imreallynotbatman.com
+</code></pre><p>Upon reviewing the <code>url</code> field, we identified clear indicators of the &ldquo;Joomla&rdquo; CMS.
+![[Screenshot 2025-06-18 203453.png]]</p>
+<blockquote>
+<p><code>Joomla</code></p></blockquote>
+</li>
+<li>
+<p><strong>What is the web scanner, the attacker used to perform the scanning attempts?</strong></p>
+<p>Web scanners typically identify themselves in the <code>User-Agent</code> string of HTTP requests. Other common web scanners include Nikto and Nmap (when used for web enumeration). To find the scanner used, we examined the <code>http.http_user_agent</code> field in the <code>stream:http</code> logs.</p>
+<pre tabindex="0"><code>index=botsv1 sourcetype=stream:http src_ip=40.80.148.42 | stats count by http.http_user_agent
+</code></pre><p>By analyzing the <code>http.http_user_agent</code> field, we identified the specific web scanner employed by the attacker.</p>
+<p>![[Pasted image 20250618210822.png]]
+Additional Information about User-Agents:</p>
+<p>The User-Agent HTTP header is a string that identifies the client software (e.g., web browser, bot, or scanner) initiating a request. Attackers often use specific User-Agent strings that correspond to well-known scanning tools like Nikto, Nmap&rsquo;s HTTP scripts, or Acunetix to conduct automated vulnerability assessments. Analyzing these headers is crucial for identifying automated reconnaissance activities.</p>
+<blockquote>
+<p><code>Acunetix</code></p></blockquote>
+</li>
+<li>
+<p><strong>What is the IP address of the server imreallynotbatman.com?</strong></p>
+<p>The destination IP address (<code>dest_ip</code>) in network flow logs (<code>stream:http</code>) will directly correspond to the IP address of the <code>imreallynotbatman.com</code> web server, as it is the recipient of the attacker&rsquo;s requests.</p>
+<pre tabindex="0"><code>index=botsv1 sourcetype=stream:http imreallynotbatman.com | stats count by dest_ip
+</code></pre><blockquote>
+<p><code>192.158.250.70</code></p></blockquote>
+</li>
+</ol>
+<h1 id="exploitation-phase-analysis">Exploitation Phase Analysis</h1>
+<p>The exploitation phase details how the attacker leveraged identified vulnerabilities to gain unauthorized access to the <code>imreallynotbatman.com</code> web server. This typically involves delivering and executing a malicious payload, often after successful authentication or by exploiting a direct vulnerability.</p>
+<p>Initial Assessment of HTTP Methods and Source IPs:</p>
+<p>To understand the nature of interactions with the web server, we first analyzed HTTP requests by counting them per source IP, sorted by the number of requests. This helps identify highly active IPs that might be involved in scanning or brute-forcing.</p>
+<p><strong>Search Query:</strong></p>
+<pre tabindex="0"><code>index=botsv1 imreallynotbatman.com sourcetype=stream* | stats count(src_ip) as Requests by src_ip | sort - Requests
+</code></pre><p>The results showed that <code>23.22.63.114</code> was responsible for a significant number of POST requests, which often indicates data submission, potentially including login attempts.</p>
+<p>![[Pasted image 20250618212202.png]]</p>
+<p>Focusing on Administrator Login Attempts:
+Given that the website was defaced, administrative access was highly probable. We investigated POST requests specifically targeting the Joomla administrator login page.</p>
+<p><strong>Search Query:</strong></p>
+<pre tabindex="0"><code>index=botsv1 imreallynotbatman.com sourcetype=stream:http dest_ip=&#34;192.168.250.70&#34; uri=&#34;/joomla/administrator/index.php&#34;
+</code></pre><p>To examine the data submitted during these POST requests, we included the <code>form_data</code> field, which often contains sensitive information like usernames and passwords.</p>
+<p><strong>Search Query:</strong></p>
+<pre tabindex="0"><code>index=botsv1 sourcetype=stream:http dest_ip=&#34;192.168.250.70&#34; http_method=POST uri=&#34;/joomla/administrator/index.php&#34; | table _time uri src_ip dest_ip form_data
+</code></pre><p>![[9c47791d96dbadf8ab0d6a0adf1a9508.png]]</p>
+<p>Analysis of the <code>form_data</code> revealed that <code>admin</code> was the most frequently attempted username. This strongly indicated a brute-force attack targeting the administrative interface.</p>
+<p>Extracting Username and Password Fields using Regex:</p>
+<p>To systematically extract attempted passwords and confirm successful logins, a regular expression was applied to the form_data field, specifically looking for patterns associated with username and password submissions.</p>
+<p><strong>Search Query:</strong></p>
+<pre tabindex="0"><code>index=botsv1 sourcetype=stream:http dest_ip=&#34;192.168.250.70&#34; http_method=POST form_data=*username*passwd* | rex field=form_data &#34;passwd=(?&lt;creds&gt;\w+)&#34; | table _time src_ip uri http_user_agent creds
+</code></pre><p>This query yielded 413 results, and one entry stood out as a successful login attempt from the suspicious IP <code>40.80.148.42</code> using the password &ldquo;batman&rdquo;. This confirmed that <code>23.22.63.114</code> was likely involved in the brute-force attempts using a Python script, while <code>40.80.148.42</code> was the IP used for the final, successful login.</p>
+<p>![[Pasted image 20250618212908.png]]</p>
+<h3 id="solutions-1">Solutions</h3>
+<ol>
+<li>
+<p>What was the URI which got multiple brute force attempts?</p>
+<p>The URI /joomla/administrator/index.php was consistently targeted with numerous POST requests, indicative of brute-force attempts.</p>
+<blockquote>
+<p><code>/joomla/administrator/index.php</code></p></blockquote>
+</li>
+<li>
+<p>Against which username was the brute force attempt made?</p>
+<p>Analysis of the form_data in the POST requests revealed that admin was the primary username targeted during the brute-force attack.</p>
+</li>
+</ol>
+<blockquote>
+<p><code>admin</code></p></blockquote>
+<ol start="3">
+<li>
+<p>What was the correct password for admin access to the content management system running imreallynotbatman.com?</p>
+<p>The regular expression search for form_data containing passwd= revealed one successful login attempt with the password batman.</p>
+<blockquote>
+<p><code>batman</code></p></blockquote>
+</li>
+<li>
+<p>How many unique passwords were attempted in the brute force attempt?</p>
+<p>The query <code>rex field=form_data &quot;passwd=(?&lt;creds&gt;\w+)&quot;</code> returned <strong>413 entries</strong>, with <strong>1 being the correct password</strong>. Assuming each entry is a <strong>unique attempt</strong>, total unique passwords tried = <strong>413</strong> (including the correct one). If counting <strong>only failed attempts</strong>, it&rsquo;s <strong>412</strong>.</p>
+</li>
+</ol>
+<blockquote>
+<p><code>412</code></p></blockquote>
+<ol start="5">
+<li>
+<p>What IP address is likely attempting a brute force password attack against imreallynotbatman.com?</p>
+<p>The initial analysis of HTTP POST requests showed that 23.22.63.114 was making the most POST requests, consistent with a brute-force attack, and the http_user_agent field for this IP would likely show a scripting tool (e.g., Python requests).</p>
+<blockquote>
+<p><code>23.22.63.114</code></p></blockquote>
+</li>
+<li>
+<p>After finding the correct password, which IP did the attacker use to log in to the admin panel?</p>
+<p>The Splunk query extracting credentials (| rex field=form_data &ldquo;passwd=(?&lt;creds&gt;\w+)&rdquo;) showed that after the brute-force attempts, the IP address 40.80.148.42 successfully logged in using the discovered batman password.</p>
+<blockquote>
+<p><code>40.80.148.42</code></p></blockquote>
+</li>
+</ol>
+
+    </div>
+    <footer class="content__footer"></footer>
+
+            </section>
+
+            <section class="page__aside">
+                <div class="aside__about">
+<div class="aside__about">
+    
+<h1 class="about__title">:&gt; Ibha</h1>
+<p class="about__description">Hello, I&rsquo;m [redacted]</p>
+</div>
+
+
+<ul class="aside__social-links">
+    
+    <li>
+        <a href="https://github.com/lumin3t" rel="me" aria-label="GitHub" title="GitHub"><i class="fa-brands fa-github" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+    <li>
+        <a href="mailto:surgeoffrost@proton.me" rel="me" aria-label="Email" title="Email"><i class="fa-solid fa-envelope" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+    <li>
+        <a href="https://dev.to/luminet" rel="me" aria-label="Dev.to" title="Dev.to"><i class="ai ai-orcid" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+    <li>
+        <a href="https://tryhackme.com/luminet" rel="me" aria-label="TryHackMe" title="TryHackMe"><i class="fa-sharp fa-solid fa-cloud" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+</ul>
+</div>
+                <hr>
+                <div class="aside__content">
+    
+    
+
+    
+
+                </div>
+            </section>
+
+            <footer class="page__footer"><p>
+    
+    
+    
+    
+    
+    
+      
+    
+      
+    
+      
+    
+    
+    
+      
+      
+          
+            
+            
+                <br/><span class="active">$ echo $LANG<br/><b></b></span><br/>
+
+            
+          
+      
+    
+</p>
+<br /><br />
+<p class="copyright"></p>
+<p class="advertisement">Powered by <a href="https://gohugo.io/">hugo</a> and <a href="https://github.com/joeroe/risotto">risotto</a>.</p>
+</footer>
+
+        </div>
+    </body>
+
+</html>

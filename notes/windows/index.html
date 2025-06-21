@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><title>My Site</title>
+<meta name="description" content="Hello, I&#39;m [redacted]">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8"/>
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.4/css/academicons.min.css" integrity="sha512-IW0nhlW5MgNydsXJO40En2EoCkTTjZhI3yuODrZIc8cQ4h1XcF53PsqDHa09NqnkXuIe0Oiyyj171BqZFwISBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<link rel="stylesheet" href="http://localhost:1313/css/palettes/tokyo-night-dark.css">
+<link rel="stylesheet" href="http://localhost:1313/css/risotto.css">
+<link rel="stylesheet" href="http://localhost:1313/css/custom.css">
+
+
+
+
+
+
+
+</head>
+
+    <body>
+        <div class="page">
+
+            <header class="page__header"><nav class="page__nav main-nav">
+    <ul>
+    <h1 class="page__logo"><a href="http://localhost:1313/" class="page__logo-inner">My Site</a></h1>
+    
+    
+    <li class="main-nav__item"><a class="nav-main-item" href="http://localhost:1313/about/" title="">About</a></li>
+    
+    <li class="main-nav__item"><a class="nav-main-item" href="http://localhost:1313/notes" title="">Notes</a></li>
+    
+    <li class="main-nav__item"><a class="nav-main-item" href="http://localhost:1313/posts" title="">Posts</a></li>
+    
+    </ul>
+</nav>
+
+</header>
+
+            <section class="page__body">
+    <header class="content__header">
+        <h1></h1>
+    </header>
+    <div class="content__body">
+        <p>windows 10 retires oct 14 2025
+ <strong>System Information</strong> .  <a href="https://www.microsoft.com/en-us/windows-server/">Windows Server 2025</a>.
+ difference between the win 11 Home and Pro <a href="https://www.microsoft.com/en-us/windows/compare-windows-11-home-vs-pro-versions#tabs1-2">here</a>. (bitlocker drive - lockdown)
+ Windows  is the <strong>New Technology File System</strong> or simply  <a href="https://docs.microsoft.com/en-us/windows-server/storage/file-server/ntfs-overview">NTFS</a> .
+ Before NTFS, there was  <strong>FAT16/FAT32</strong> (File Allocation Table) and <strong>HPFS</strong> (High Performance File System).
+ 
+ NTFS addresses many of the limitations of the previous file systems; such as: </p>
+<ul>
+<li>Supports files larger than 4GB</li>
+<li>Set specific permissions on folders and files</li>
+<li>Folder and file compression</li>
+<li>Encryption ( <a href="https://docs.microsoft.com/en-us/windows/win32/fileio/file-encryption">Encryption File System</a> or <strong>EFS</strong> )</li>
+</ul>
+<p>Alternate Data Streams  (ADS) is a file attribute specific to Windows  NTFS  (New Technology File System). - refer to the following link from MalwareBytes <a href="https://blog.malwarebytes.com/101/2015/07/introduction-to-alternate-data-streams/">here</a> .</p>
+<p>check day 21: <a href="https://tryhackme.com/room/adventofcyber2">Advent of Cyber 2</a>  (hands on)</p>
+<h4 id="windowssystem-32-folders">Windows/System 32 folders</h4>
+<p> <a href="https://www.howtogeek.com/346997/what-is-the-system32-directory-and-why-you-shouldnt-delete-it/">here</a> . has env variables
+ system variable for windows folder: <code>%windir%</code></p>
+<h4 id="user-profiles">User profiles</h4>
+<p> Start Menu and click <strong>Run</strong>. Type <code>lusrmgr.msc</code>.
+ Back to lusrmgr, you should see two folders: <strong>Users</strong> and <strong>Groups</strong>. 
+If you click on Groups, you see all the names of the local groups along with a brief description for each group. perms from group
+<strong>Note</strong>: If you click on <strong>Add someone else to this PC</strong> from <strong>Other users</strong>, it will open <strong>Local Users and Management</strong>.</p>
+<p><strong>User Account Control</strong> (UAC).
+<strong>Note</strong> : UAC (by default) doesn&rsquo;t apply for the built-in local administrator account.</p>
+<p>You can refer to this <a href="https://www.howtogeek.com/405806/windows-task-manager-the-complete-guide/">blog post</a> for more detailed information about the Task Manager.
+If you wish to learn more about the core Windows processes and what each process is responsible for, visit the <a href="https://tryhackme.com/jr/btwindowsinternals">Core Windows Processes room</a>.</p>
+<p><strong>System Configuration</strong> utility (<code>MSConfig</code>)
+In the <strong>General</strong> tab, we can select what devices and services for Windows to load upon boot. The options are: <strong>Normal</strong>, <strong>Diagnostic</strong>, or <strong>Selective</strong>. 
+In the <strong>Boot</strong> tab, we can define various boot options for the Operating System.
+The <strong>Services</strong> tab lists all services configured for the system regardless of their state (running or stopped). </p>
+<p><strong>Task Manager (</strong><code>taskmgr</code><strong>)</strong></p>
+<p> <strong>Computer Management</strong> (<code>compmgmt</code>)
+ System Tools, Storage, and Services and Applications
+ ![[Pasted image 20250604205529.png]]
+ <strong>System tools:</strong>
+ task scheduler
+ event viewer: <a href="https://docs.microsoft.com/en-us/windows/win32/eventlog/event-types">docs.microsoft.com</a> - windows logs (app, sec, custom
+ -  Event Viewer and Event Logs, please refer to the Windows Event Log <a href="https://tryhackme.com/room/windowseventlogs">room</a>.
+ )
+ <strong>Performance Monitor</strong> (<code>perfmon</code>).
+ <strong>System Information</strong> (<code>msinfo32</code>) tool?
+ <strong>Resource Monitor</strong> (<code>resmon</code>)?
+  command prompt (<code>cmd</code>)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span> hostname
+</span></span><span style="display:flex;"><span> whoami
+</span></span><span style="display:flex;"><span> ipconfig
+</span></span><span style="display:flex;"><span> /? <span style="color:#75715e"># Help</span>
+</span></span><span style="display:flex;"><span> cls <span style="color:#75715e"># Clear</span>
+</span></span><span style="display:flex;"><span> netstat <span style="color:#75715e"># -a -b -e</span>
+</span></span><span style="display:flex;"><span> net <span style="color:#75715e"># also net help</span>
+</span></span></code></pre></div><p> <strong>net</strong> sub-commands, such as <strong>localgroup</strong>, <strong>use</strong>, <strong>share</strong>, and <strong>session</strong>.
+ Windows Registry
+ <strong>Registry Editor</strong> (<code>regedit</code>). - regedt32.exe
+ 
+Updates are typically released on the 2nd Tuesday of each month. This day is called <strong>Patch Tuesday</strong>
+  <strong>Microsoft Security Update</strong> <strong>Guide</strong> <a href="https://msrc.microsoft.com/update-guide">here</a><strong>.</strong>
+  command <code>control /name Microsoft.WindowsUpdate</code>.
+   <code>Open Windows Security</code>.
+   <strong>Tip:</strong> Command to open the Windows Defender Firewall is <code>WF.msc</code>.
+   settings for the <strong>Microsoft Defender SmartScreen</strong>. - <em>phishing or malware websites and applications, and the downloading of potentially malicious files</em>
+   <strong>Exploit protection</strong>
+   <strong>Core isolation</strong></p>
+<ul>
+<li><strong>Memory Integrity</strong> - Prevents attacks from inserting malicious code into high-security processes.
+TPM ship (trusted platform module) = <em>crypto-processor that is designed to carry out cryptographic operations. The chip includes multiple physical security mechanisms to make it tamper-resistant, and malicious software is unable to tamper with the security functions of the TPM</em></li>
+</ul>
+<p>bitlocker works w tpm so data doesnt get stolen: Microsoft documentation to learn more about BitLocker <a href="https://docs.microsoft.com/en-us/windows/security/information-protection/bitlocker/bitlocker-overview">here</a>.
+(if no tpm chip on computer for bitlocker have usb with startup key for uh password it lock during startup process yk)</p>
+<p><strong>Bonus</strong>: If you wish to interact hands-on with VSS, I suggest exploring Day 23 of <a href="https://tryhackme.com/room/adventofcyber2">Advent of Cyber 2</a>.
+If VSS is enabled (<strong>System Protection</strong> turned on), you can perform the following tasks from within <strong>advanced system settings</strong>. </p>
+<ul>
+<li><strong>Create a restore point</strong></li>
+<li><strong>Perform system restore</strong></li>
+<li><strong>Configure restore settings</strong></li>
+<li><strong>Delete restore points</strong></li>
+</ul>
+<p>From a security perspective, malware writers know of this Windows feature and write code in their malware to look for these files and delete them. Doing so makes it impossible to recover from a ransomware attack unless you have an offline/off-site backup.</p>
+<p>![[Pasted image 20250605235403.png]]
+Further reading material:</p>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/windows/win32/amsi/antimalware-scan-interface-portal">Antimalware Scan Interface</a><a href="https://docs.microsoft.com/en-us/windows/win32/amsi/antimalware-scan-interface-portal"></a></li>
+<li><a href="https://docs.microsoft.com/en-us/windows/security/identity-protection/credential-guard/credential-guard-manage">Credential Guard</a><a href="https://docs.microsoft.com/en-us/windows/security/identity-protection/credential-guard/credential-guard-manage"></a></li>
+<li><a href="https://support.microsoft.com/en-us/windows/learn-about-windows-hello-and-set-it-up-dae28983-8242-bb2a-d3d1-87c9d265a5f0#:~:text=Windows%2010,in%20with%20just%20your%20PIN.">Windows 10 Hello</a></li>
+<li><a href="https://www.csoonline.com/article/3253899/the-best-new-windows-10-security-features.html">CSO Online - The best new Windows 10 security features</a></li>
+</ul>
+<p><strong>Note</strong>: Attackers use built-in Windows tools and utilities in an attempt to go undetected within the victim environment.  This tactic is known as Living Off The Land. Refer to the following resource <a href="https://lolbas-project.github.io/">here</a> to learn more about this.</p>
+<h1 id="windows-command-line">Windows Command Line</h1>
+<p>set - Path=
+ver - OS
+systeminfo
+(more) - driverquery | more - longer
+help
+cls - clear
+ipconfig
+ipconfig / all
+ping example.com
+tracert example.com - trace route
+nslookup example.com
+nslookup example.com 1.1.1.1
+ <code>-h</code> displays the help page. We opted for the following options:</p>
+<ul>
+<li><code>-a</code> displays all established connections and listening ports</li>
+<li><code>-b</code> shows the program associated with each listening port and established connection</li>
+<li><code>-o</code> reveals the process ID (PID) associated with the connection</li>
+<li><code>-n</code> uses a numerical form for addresses and port numbers</li>
+</ul>
+<p>We combine these four options and execute the <code>netstat -abon</code> command</p>
+<p>cd
+dir
+tree
+mkdir
+move file.txt ..
+more file.txt - cat tara
+command | more
+copy file1 file2
+del (or) erase
+tasklist
+tasklist /?
+<code>tasklist /FI &quot;imagename eq sshd.exe&quot;</code>. Note that <code>/FI</code> is used to set the filter <em>image name equals</em> <code>sshd.exe</code>.
+taskkill /PID target_pid</p>
+<ul>
+<li><code>chkdsk</code>: checks the file system and disk volumes for errors and bad sectors.</li>
+<li><code>driverquery</code>: displays a list of installed device drivers.</li>
+<li><code>sfc /scannow</code>: scans system files for corruption and repairs them if possible.</li>
+</ul>
+<p>shutdown/s</p>
+<h1 id="windows-powershell">Windows Powershell</h1>
+<p>its object oriented, which means it can handle complex data types and interact with system components more effectively.
+Windows used structured data and APIs, while Unix treated everything as text files</p>
+<p>win+R
+cmd.exe -&gt; powershell
+commands here - cmdlets</p>
+<ul>
+<li>
+<p><code>Get-Content</code>: Retrieves (gets) the content of a file and displays it in the console.</p>
+</li>
+<li>
+<p><code>Set-Location</code>: Changes (sets) the current working directory.</p>
+</li>
+<li>
+<p>CommandInfo</p>
+</li>
+<li>
+<p>CommandType &ldquo;Function&rdquo;</p>
+</li>
+<li>
+<p>Get-Alias</p>
+</li>
+<li>
+<p>Get-Help Get-Data - info</p>
+</li>
+<li>
+<p>append w/ -examples</p>
+</li>
+<li>
+<p>Find-Module -Name &ldquo;PowerShell*&rdquo;</p>
+</li>
+<li>
+<p>Cmdlet -Property &ldquo;pattern*&rdquo;</p>
+</li>
+<li>
+<p>Install-Module -Name &ldquo;PowerShellGet&rdquo;
+eg
+Alias           clear -&gt; Clear-Host</p>
+</li>
+<li>
+<p> <code>-eq</code> (i.e. &ldquo;<strong>equal to</strong>&rdquo;)</p>
+</li>
+<li>
+<p><code>-ne</code>: &ldquo;<strong>not equal</strong>&rdquo;.</p>
+</li>
+<li>
+<p><code>-gt</code>: &ldquo;<strong>greater than</strong>&rdquo;.</p>
+</li>
+<li>
+<p><code>-ge</code>: &ldquo;<strong>greater than or equal to</strong>&rdquo;.</p>
+</li>
+<li>
+<p><code>-lt</code>: &ldquo;<strong>less than</strong>&rdquo;.</p>
+</li>
+<li>
+<p><code>-le</code>: &ldquo;<strong>less than or equal to</strong>&rdquo;.</p>
+</li>
+</ul>
+<p>Get-ChildItem | Where-Object -Property &ldquo;Name&rdquo; -like &ldquo;ship*&rdquo;
+Get-ChildItem | Select-Object Name,Length</p>
+<p>Get-ComputerInfo
+Get-LocalUser
+Get-NetIPConfiguration - ipconfig
+Get-NetIPAddress
+Get-Process
+Get-Service
+Get-NetTCPConnection
+Get-FileHash - tells file hash :0
+Invoke-Command</p>
+
+    </div>
+    <footer class="content__footer"></footer>
+
+            </section>
+
+            <section class="page__aside">
+                <div class="aside__about">
+<div class="aside__about">
+    
+<h1 class="about__title">:&gt; Ibha</h1>
+<p class="about__description">Hello, I&rsquo;m [redacted]</p>
+</div>
+
+
+<ul class="aside__social-links">
+    
+    <li>
+        <a href="https://github.com/lumin3t" rel="me" aria-label="GitHub" title="GitHub"><i class="fa-brands fa-github" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+    <li>
+        <a href="mailto:surgeoffrost@proton.me" rel="me" aria-label="Email" title="Email"><i class="fa-solid fa-envelope" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+    <li>
+        <a href="https://dev.to/luminet" rel="me" aria-label="Dev.to" title="Dev.to"><i class="ai ai-orcid" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+    <li>
+        <a href="https://tryhackme.com/luminet" rel="me" aria-label="TryHackMe" title="TryHackMe"><i class="fa-sharp fa-solid fa-cloud" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+</ul>
+</div>
+                <hr>
+                <div class="aside__content">
+    
+    
+
+    
+
+                </div>
+            </section>
+
+            <footer class="page__footer"><p>
+    
+    
+    
+    
+    
+    
+      
+    
+      
+    
+      
+    
+    
+    
+      
+      
+          
+            
+            
+                <br/><span class="active">$ echo $LANG<br/><b></b></span><br/>
+
+            
+          
+      
+    
+</p>
+<br /><br />
+<p class="copyright"></p>
+<p class="advertisement">Powered by <a href="https://gohugo.io/">hugo</a> and <a href="https://github.com/joeroe/risotto">risotto</a>.</p>
+</footer>
+
+        </div>
+    </body>
+
+</html>

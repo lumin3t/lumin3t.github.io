@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><title>My Site</title>
+<meta name="description" content="Hello, I&#39;m [redacted]">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8"/>
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.4/css/academicons.min.css" integrity="sha512-IW0nhlW5MgNydsXJO40En2EoCkTTjZhI3yuODrZIc8cQ4h1XcF53PsqDHa09NqnkXuIe0Oiyyj171BqZFwISBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<link rel="stylesheet" href="http://localhost:1313/css/palettes/tokyo-night-dark.css">
+<link rel="stylesheet" href="http://localhost:1313/css/risotto.css">
+<link rel="stylesheet" href="http://localhost:1313/css/custom.css">
+
+
+
+
+
+
+
+</head>
+
+    <body>
+        <div class="page">
+
+            <header class="page__header"><nav class="page__nav main-nav">
+    <ul>
+    <h1 class="page__logo"><a href="http://localhost:1313/" class="page__logo-inner">My Site</a></h1>
+    
+    
+    <li class="main-nav__item"><a class="nav-main-item" href="http://localhost:1313/about/" title="">About</a></li>
+    
+    <li class="main-nav__item"><a class="nav-main-item" href="http://localhost:1313/notes" title="">Notes</a></li>
+    
+    <li class="main-nav__item"><a class="nav-main-item" href="http://localhost:1313/posts" title="">Posts</a></li>
+    
+    </ul>
+</nav>
+
+</header>
+
+            <section class="page__body">
+    <header class="content__header">
+        <h1></h1>
+    </header>
+    <div class="content__body">
+        <h1 id="linux-fundamentals">Linux fundamentals</h1>
+<p><em>Note: Ubuntu Server can run on systems with only 512MB of RAM!</em>
+SCP SOURCE DESTINATION
+securely copying files
+<code>scp important.txt ubuntu@192.168.1.30:/home/ubuntu/transferred.txt</code>
+wget &amp; curl: download
+download file from ssh on host m/c:
+![[Pasted image 20250603162631.png]]</p>
+<h4 id="processes-101">Processes 101</h4>
+<p>ps, ps aux, top, kill &lt;pid&gt;</p>
+<ul>
+<li>SIGTERM - Kill the process, but allow it to do some cleanup tasks beforehand</li>
+<li>SIGKILL - Kill the process - doesn&rsquo;t do any cleanup after the fact</li>
+<li>SIGSTOP - Stop/suspend a process
+systemd
+systemctl:  <code>systemctl [option] [service]</code></li>
+<li>Start</li>
+<li>Stop</li>
+<li>Enable</li>
+<li>Disable
+bg process runs till ctrl Z
+foregrounding process: fg</li>
+</ul>
+<h4 id="automation">Automation</h4>
+<p>crontab and cronjobs cron: runs durig boot - &ldquo;<a href="https://crontab-generator.org/">Crontab Generator</a>&rdquo;
+|Value|Description|
+|MIN|What minute to execute at|
+|HOUR|What hour to execute at|
+|DOM|What day of the month to execute at|
+|MON|What month of the year to execute at|
+|DOW|What day of the week to execute at|
+|CMD|The actual command that will be executed.|</p>
+<p>You may wish to backup &ldquo;cmnatic&rdquo;&lsquo;s  &ldquo;Documents&rdquo; every 12 hours. We would use the following formatting: (* = dont care)
+<code>0 */12 * * * cp -R /home/cmnatic/Documents /var/backups/</code>
+<code>crontabs</code>
+ <code>crontab -e</code> - edit</p>
+<h4 id="package-management">Package Management</h4>
+<pre tabindex="0"><code># 1. Add GPG Key
+wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
+
+# 2. Add Repository
+echo &#34;deb https://download.sublimetext.com/ apt/stable/&#34; | sudo tee /etc/apt/sources.list.d/sublime-text.list
+
+# 3. Update &amp; Install
+sudo apt update
+sudo apt install sublime-text
+
+# (Optional) Remove Sublime Text
+sudo apt remove sublime-text
+sudo rm /etc/apt/sources.list.d/sublime-text.list
+</code></pre><p>Oth rooms:</p>
+<ul>
+<li>Bash Scripting - <a href="https://tryhackme.com/room/bashscripting">https://tryhackme.com/room/bashscripting</a></li>
+<li>Regular Expressions - <a href="https://tryhackme.com/room/catregex">https://tryhackme.com/room/catregex</a></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>echo <span style="color:#e6db74">&#34;Hey, what’s your name?&#34;</span>
+</span></span><span style="display:flex;"><span>read name
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;Welcome, </span>$name<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i in <span style="color:#f92672">{</span>1..0<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>echo $i
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;Please enter your name first:&#34;</span>
+</span></span><span style="display:flex;"><span>read name
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> <span style="color:#e6db74">&#34;</span>$name<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Stewart&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>        echo <span style="color:#e6db74">&#34;Welcome Stewart! Here is the secret: THM_Script&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>        echo <span style="color:#e6db74">&#34;Sorry! You are not authorized to access the secret.&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fi</span>
+</span></span></code></pre></div><h1 id="python-fundamentals">Python fundamentals</h1>
+<p>if else</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;bob&#34;</span> 
+</span></span><span style="display:flex;"><span>hungry <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> name <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;bob&#34;</span> <span style="color:#f92672">and</span> hungry <span style="color:#f92672">==</span> <span style="color:#66d9ef">True</span>:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;bob is hungry&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">elif</span> name <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;bob&#34;</span> <span style="color:#f92672">and</span> <span style="color:#f92672">not</span> hungry:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;Bob is not hungry&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span>: <span style="color:#75715e"># If all other if conditions are not met</span>
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;Not sure who this is or if they are hungry&#34;</span>)
+</span></span></code></pre></div><p>while</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span> i <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">10</span>:
+</span></span><span style="display:flex;"><span>     print(i)
+</span></span><span style="display:flex;"><span>     i <span style="color:#f92672">=</span> i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+</span></span></code></pre></div><p>for each type of thing</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>websites <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;facebook.com&#34;</span>, <span style="color:#e6db74">&#34;google.com&#34;</span>, <span style="color:#e6db74">&#34;amazon.com&#34;</span>]
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> site <span style="color:#f92672">in</span> websites:
+</span></span><span style="display:flex;"><span>     print(site)
+</span></span></code></pre></div><p>for</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">5</span>): <span style="color:#75715e"># 5 excluded</span>
+</span></span><span style="display:flex;"><span>     print(i)
+</span></span></code></pre></div><p>file</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>f <span style="color:#f92672">=</span> open(<span style="color:#e6db74">&#34;flag.txt&#34;</span>, <span style="color:#e6db74">&#34;r&#34;</span>)  
+</span></span><span style="display:flex;"><span>print(f<span style="color:#f92672">.</span>read())
+</span></span></code></pre></div><h1 id="common-attacks">Common Attacks</h1>
+<p>stuxnet
+wannacry
+petya
+notpetya</p>
+<p>something yk - password
+something you have - card, yubikey
+something you are - biometric
+password managaers</p>
+<ul>
+<li><a href="https://1password.com/">1Password</a></li>
+<li><a href="https://www.lastpass.com/">LastPass</a></li>
+<li><a href="https://keepass.info/">KeePass</a></li>
+<li><a href="https://bitwarden.com/">Bitwarden</a></li>
+</ul>
+<p>3,2,1 rule backups</p>
+<p>You should always keep at least <strong>three</strong> up-to-date copies of your data; this can include the original copy, but all copies must be maintained.</p>
+<p>Backups should be stored on at least <strong>two</strong> different storage mediums; for example: a cloud backup and a USB device. This can include a hard drive on your PC.</p>
+<p><strong>One</strong> (or more) backups should be stored &ldquo;off-site&rdquo;. Cloud services such as Google Drive are ideal for personal use in this regard</p>
+<h1 id="cyber-kill-chain">Cyber Kill Chain</h1>
+<p>![[Pasted image 20250601230721.png]]</p>
+<h4 id="recon">Recon</h4>
+<ul>
+<li><a href="https://github.com/laramies/theHarvester">theHarvester</a> - other than gathering emails, this tool is also capable of gathering names, subdomains, IPs, and URLs using multiple public data sources </li>
+<li><a href="https://hunter.io/">Hunter.io</a> - this is  an email hunting tool that will let you obtain contact information associated with the domain</li>
+<li><a href="https://osintframework.com/">OSINT Framework</a> - OSINT Framework provides the collection of OSINT tools based on various categories</li>
+</ul>
+<h4 id="weaponization">Weaponization</h4>
+<p>malware exploit backdoor
+<a href="https://www.trustedsec.com/blog/intro-to-macros-and-vba-for-script-kiddies/">&ldquo;Intro to Macros and VBA For Script Kiddies&rdquo; by TrustedSec</a>.
+worm or payload
+Command and Control (C2) techniques for executing the commands on the victim&rsquo;s machine or deliver more payloads. You can read more about the C2 techniques on <a href="https://attack.mitre.org/tactics/TA0011/">MITRE ATT&amp;CK</a>.
+backdoor - bypass security and get in</p>
+<h4 id="delivery">Delivery</h4>
+<p><a href="https://www.csoonline.com/article/3534693/cybercriminal-group-mails-malicious-usb-dongles-to-targeted-companies.html">CSO Online &ldquo;Cybercriminal group mails malicious USB dongles to targeted companies.&rdquo;</a>
+watering hole attack - is a targeted attack designed to aim at a specific group of people by compromising the website they are usually visiting and then redirecting them to the malicious website of an attacker&rsquo;s choice.</p>
+<h4 id="exploitation">Exploitation</h4>
+<p><a href="https://www.crowdstrike.com/cybersecurity-101/lateral-movement/">CrowdStrike</a>, <strong>lateral movement</strong> 
+ web-based vulnerabilities <a href="https://tryhackme.com/room/owasptop10">OWASP Top 10</a>.
+&ldquo;Zero-day Exploit&rdquo; <a href="https://www.fireeye.com/current-threats/what-is-a-zero-day-exploit.html">FireEye</a></p>
+<h4 id="installation">Installation</h4>
+<p><strong><a href="https://www.offensive-security.com/metasploit-unleashed/persistent-backdoors/">persistent backdoor</a>.</strong> -  <a href="https://tryhackme.com/room/windowslocalpersistence">Windows Persistence Room</a></p>
+
+    </div>
+    <footer class="content__footer"></footer>
+
+            </section>
+
+            <section class="page__aside">
+                <div class="aside__about">
+<div class="aside__about">
+    
+<h1 class="about__title">:&gt; Ibha</h1>
+<p class="about__description">Hello, I&rsquo;m [redacted]</p>
+</div>
+
+
+<ul class="aside__social-links">
+    
+    <li>
+        <a href="https://github.com/lumin3t" rel="me" aria-label="GitHub" title="GitHub"><i class="fa-brands fa-github" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+    <li>
+        <a href="mailto:surgeoffrost@proton.me" rel="me" aria-label="Email" title="Email"><i class="fa-solid fa-envelope" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+    <li>
+        <a href="https://dev.to/luminet" rel="me" aria-label="Dev.to" title="Dev.to"><i class="ai ai-orcid" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+    <li>
+        <a href="https://tryhackme.com/luminet" rel="me" aria-label="TryHackMe" title="TryHackMe"><i class="fa-sharp fa-solid fa-cloud" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+</ul>
+</div>
+                <hr>
+                <div class="aside__content">
+    
+    
+
+    
+
+                </div>
+            </section>
+
+            <footer class="page__footer"><p>
+    
+    
+    
+    
+    
+    
+      
+    
+      
+    
+      
+    
+    
+    
+      
+      
+          
+            
+            
+                <br/><span class="active">$ echo $LANG<br/><b></b></span><br/>
+
+            
+          
+      
+    
+</p>
+<br /><br />
+<p class="copyright"></p>
+<p class="advertisement">Powered by <a href="https://gohugo.io/">hugo</a> and <a href="https://github.com/joeroe/risotto">risotto</a>.</p>
+</footer>
+
+        </div>
+    </body>
+
+</html>
